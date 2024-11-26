@@ -29,20 +29,25 @@ export default function Navbar() {
         <a href="#" class="hover:text-shadow-mdwhite md:text-start">
           Documentation
         </a>
-        {isLoggedIn ? (
-          <a href="/api/logout" class="hover:text-shadow-mdwhite md:text-start">
-            Log Out
-          </a>
-        ): (
-          <>
-          <a href="/login" class="hover:text-shadow-mdwhite md:text-start">
-            Log In
-          </a>
-          <a href="/signup" class="hover:text-shadow-mdwhite md:text-start">
-            Sign Up
-          </a>
-          </>
-        )}
+        {isLoggedIn
+          ? (
+            <a
+              href="/api/logout"
+              class="hover:text-shadow-mdwhite md:text-start"
+            >
+              Log Out
+            </a>
+          )
+          : (
+            <>
+              <a href="/login" class="hover:text-shadow-mdwhite md:text-start">
+                Log In
+              </a>
+              <a href="/signup" class="hover:text-shadow-mdwhite md:text-start">
+                Sign Up
+              </a>
+            </>
+          )}
       </div>
       <button id="menu-button" class="hidden max-md:flex">
         <img id="menu-button-image" src="/images/svg/menu.svg" alt="Menu" />

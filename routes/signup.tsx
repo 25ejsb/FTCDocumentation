@@ -1,3 +1,26 @@
+import { Handlers } from "$fresh/server.ts";
+import { getCookies } from "$std/http/cookie.ts";
+
+interface Data {
+  isLoggedIn: boolean;
+}
+
+export const handler: Handlers = {
+  GET(req, res) {
+    const cookies = getCookies(req.headers);
+    const isLoggedIn = cookies.auth === "verysecretcode";
+    if (isLoggedIn) {
+      return new Response(null, {
+        status: 303,
+        headers: {
+          Location: "/",
+        },
+      });
+    }
+    return res.render({ isLoggedIn: isLoggedIn });
+  },
+};
+
 export default function Signup() {
     return (
       <html lang="en">
