@@ -25,7 +25,7 @@ export default function Navbar() {
         <h1 class="text-white text-5xl max-sm:hidden">RABBI</h1>
       </a>
       <div class="flex items-center justify-center space-x-4 text-white text-2xl max-md:hidden">
-        <a href="#" class="hover:text-shadow-mdwhite md:text-start">Home</a>
+        <a href="/#" class="hover:text-shadow-mdwhite md:text-start">Home</a>
         <a href="#" class="hover:text-shadow-mdwhite md:text-start">
           Documentation
         </a>
