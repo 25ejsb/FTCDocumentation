@@ -32,5 +32,3 @@ jobs:
           project: "eitanbrochs-ftcdocument-87"
           entrypoint: "main.ts"
           root: "."
-          
-          

@@ -3,7 +3,9 @@ export default function Footer() {
     <footer class="flex flex-col items-center bg-slate-900 p-12">
       <div class="flex flex-wrap p-12 justify-center items-center">
         <div class="flex flex-col justify-center items-center h-[20rem] mx-4">
-          <h1 class="text-white text-5xl border-b-[3px] mb-4 text-center">Main Pages</h1>
+          <h1 class="text-white text-5xl border-b-[3px] mb-4 text-center">
+            Main Pages
+          </h1>
           <a
             href="/#"
             class="text-cyan-400 transition hover:text-white text-2xl mb-2"
@@ -30,7 +32,9 @@ export default function Footer() {
           </a>
         </div>
         <div class="flex flex-col justify-center items-center h-[20rem] mx-4">
-          <h1 class="text-white text-5xl border-b-[3px] mb-4 text-center">Section 2</h1>
+          <h1 class="text-white text-5xl border-b-[3px] mb-4 text-center">
+            Section 2
+          </h1>
           <a
             href="#"
             class="text-cyan-400 transition hover:text-white text-2xl mb-2"
@@ -57,7 +61,9 @@ export default function Footer() {
           </a>
         </div>
         <div class="flex flex-col justify-center items-center h-[20rem] mx-4">
-          <h1 class="text-white text-5xl border-b-[3px] mb-4 text-center">Section 3</h1>
+          <h1 class="text-white text-5xl border-b-[3px] mb-4 text-center">
+            Section 3
+          </h1>
           <a
             href="#"
             class="text-cyan-400 transition hover:text-white text-2xl mb-2"
@@ -84,7 +90,9 @@ export default function Footer() {
           </a>
         </div>
         <div class="flex flex-col justify-center items-center h-[20rem] mx-4">
-          <h1 class="text-white text-5xl border-b-[3px] mb-4 text-center">Section 4</h1>
+          <h1 class="text-white text-5xl border-b-[3px] mb-4 text-center">
+            Section 4
+          </h1>
           <a
             href="#"
             class="text-cyan-400 transition hover:text-white text-2xl mb-2"
