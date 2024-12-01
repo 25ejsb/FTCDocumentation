@@ -9,6 +9,7 @@ interface Data {
 
 export const handler: Handlers = {
   GET(req, res) {
+    const url = new URL(req.url);
     const cookies = getCookies(req.headers);
     const isLoggedIn = cookies.auth === "verysecretcode";
     if (isLoggedIn) {

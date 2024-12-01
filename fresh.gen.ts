@@ -8,6 +8,8 @@ import * as $api_deleteacc from "./routes/api/deleteacc.ts";
 import * as $api_login from "./routes/api/login.ts";
 import * as $api_logout from "./routes/api/logout.ts";
 import * as $api_signup from "./routes/api/signup.ts";
+import * as $auth_getmsuri from "./routes/auth/getmsuri.ts";
+import * as $auth_mssignin from "./routes/auth/mssignin.ts";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
 import * as $signup from "./routes/signup.tsx";
@@ -24,6 +26,8 @@ const manifest = {
     "./routes/api/login.ts": $api_login,
     "./routes/api/logout.ts": $api_logout,
     "./routes/api/signup.ts": $api_signup,
+    "./routes/auth/getmsuri.ts": $auth_getmsuri,
+    "./routes/auth/mssignin.ts": $auth_mssignin,
     "./routes/index.tsx": $index,
     "./routes/login.tsx": $login,
     "./routes/signup.tsx": $signup,
