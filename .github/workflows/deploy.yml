@@ -29,6 +29,8 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "eitanbrochs-ftcdocument-87"
+          project: "ftcdocumentation"
           entrypoint: "main.ts"
           root: "."
+          
+          
