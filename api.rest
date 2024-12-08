@@ -2,5 +2,5 @@ DELETE http://localhost:8000/api/keydeleter
 Content-Type: application/json
 
 {
-    "params": "sessions,9411c28e-6c0a-4385-a5f9-a44201518a4a"
+    "params": "users, eitan.brochstein@icloud.com"
 }

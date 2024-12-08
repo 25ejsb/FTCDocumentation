@@ -44,7 +44,7 @@ export const handler: Handlers = {
           const sessionId = await createSession(existingUser.id);
 
           const res = new Response("Response worked!", {
-            status: 200,
+            status: 303,
             headers: { "Location": "/" },
           });
 
