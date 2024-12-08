@@ -1,6 +1,4 @@
-const kv = await Deno.openKv(
-  "https://api.deno.com/databases/1e831a73-22d1-4480-b16a-02fceb6a3af2/connect",
-);
+const kv = await Deno.openKv();
 
 export interface User {
   id: string;
