@@ -1,5 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 import { getCookies, setCookie } from "$std/http/cookie.ts";
+import RedLinkBtn from "../components/buttons/RedLinkBtn.tsx";
 import Footer from "../islands/Footer.tsx";
 import Navbar from "../islands/Navbar.tsx";
 import { hashPassword } from "../utils/auth.ts";
@@ -11,10 +12,10 @@ interface Data {
 
 export const handler: Handlers = {
   GET(req, res) {
-    const url = new URL(req.url);
-    const cookies = getCookies(req.headers);
-    const isLoggedIn = cookies.auth === "verysecretcode";
-    if (isLoggedIn) {
+    const sessionId = req.headers.get("cookie")?.split("; ").find((cookie) =>
+      cookie.startsWith("session_id=")
+    )?.split("=")[1];
+    if (sessionId) {
       return new Response(null, {
         status: 303,
         headers: {
@@ -22,7 +23,7 @@ export const handler: Handlers = {
         },
       });
     }
-    return res.render({ isLoggedIn: isLoggedIn });
+    return res.render({ isLoggedIn: sessionId });
   },
   async POST(req) {
     const formData = await req.formData();
@@ -96,12 +97,27 @@ export default function Signup() {
               type="password"
               name="password"
             />
+            <p class="my-4 text-[1.25rem] max-sm:text-[1rem]">Already have an account? <a class="text-red-900" href="/login">Login!</a></p>
             <button
               class="bg-red-900 px-8 py-4 text-[2rem] rounded-[2.5rem] text-white hover:translate-y-2 transition-all hover:shadow-md hover:shadow-red-950"
               type="submit"
             >
               Submit
             </button>
+            <div class="relative py-4 w-full">
+              <div class="absolute inset-0 flex items-center w-full">
+                <div class="w-full h-[2px] border-b border-gray-300"></div>
+              </div>
+              <div class="relative flex justify-center">
+                <span class="bg-white px-4 text-[1.2rem] text-gray-500">OR</span>
+              </div>
+            </div>
+            <a
+              href="/auth/login"
+              class={"bg-red-900 p-4 text-white rounded-3xl text-2xl transition-all mb-4 text-center hover:translate-y-1 flex space-x-3"}
+            >
+              <p class="max-sm:text-[1rem]">Signup With Microsoft</p> <img src='images/microsoft.png' width={30} height={30}/>
+            </a>
           </form>
           <script src="/ts/scroll.ts"></script>
         </section>
