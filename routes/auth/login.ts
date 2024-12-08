@@ -21,13 +21,14 @@ export const msalConfig: Configuration = {
 export const handler: Handlers = {
   async GET(req, ctx) {
     try {
+      const url = new URL(req.url);
       // Initialize MSAL Public Client Application
       const pca = new PublicClientApplication(msalConfig);
 
       // Generate authorization URL
       const authCodeUrlParameters = {
         scopes: ["user.read"],
-        redirectUri: Deno.env.get("REDIRECT_URI") || "",
+        redirectUri: url.protocol + "//" + url.host + "/auth/mssignin",
       };
 
       const authCodeUrl = await pca.getAuthCodeUrl(authCodeUrlParameters);
