@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { PublicClientApplication, Configuration } from "../../deps.ts";
+import { Configuration, PublicClientApplication } from "../../deps.ts";
 
 // Azure AD App Registration Configuration
 export const msalConfig: Configuration = {
@@ -14,8 +14,8 @@ export const msalConfig: Configuration = {
         console.log(message);
       },
       piiLoggingEnabled: false,
-    }
-  }
+    },
+  },
 };
 
 export const handler: Handlers = {
@@ -35,13 +35,13 @@ export const handler: Handlers = {
       // Redirect to Microsoft login
       return new Response(null, {
         status: 302,
-        headers: { 
-          "Location": authCodeUrl 
-        }
+        headers: {
+          "Location": authCodeUrl,
+        },
       });
     } catch (error) {
       console.error("Login error:", error);
       return new Response("Authentication failed", { status: 500 });
     }
-  }
+  },
 };

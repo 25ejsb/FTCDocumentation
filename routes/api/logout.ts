@@ -1,16 +1,23 @@
 import { Handlers } from "$fresh/server.ts";
 import { deleteCookie } from "$std/http/cookie.ts";
+import { destroySession } from "../../utils/db.ts";
 
 export const handler: Handlers = {
-  GET(req) {
-    const url = new URL(req.url);
-    const headers = new Headers(req.headers);
-    deleteCookie(headers, "auth", { path: "/", domain: url.hostname });
+  async GET(req) {
+    const sessionId = req.headers.get("cookie")?.split("; ").find((cookie) =>
+      cookie.startsWith("session_id=")
+    )?.split("=")[1];
 
-    headers.set("location", "/login");
+    if (sessionId) {
+      await destroySession(sessionId);
+    }
     return new Response(null, {
       status: 302,
-      headers,
+      headers: {
+        "Location": "/login",
+        "Set-Cookie":
+          "session_id=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT",
+      },
     });
   },
 };

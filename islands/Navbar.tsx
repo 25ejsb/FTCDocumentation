@@ -1,14 +1,18 @@
 import { JSX } from "preact/jsx-runtime";
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { getCookies } from "$std/http/cookie.ts";
 import { useEffect, useState } from "preact/hooks";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = document.cookie.includes("auth=verysecretcode");
-    setIsLoggedIn(token);
+    const sessionId = document.cookie.split("; ").find((cookie) =>
+      cookie.startsWith("session_id=")
+    )?.split("=")[1];
+    if (sessionId) {
+      setIsLoggedIn(true);
+      console.log(sessionId);
+    }
   }, []);
 
   return (
