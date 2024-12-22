@@ -62,26 +62,26 @@ export const handler: Handlers = {
           const res2 = new Response("Response worked!", {
             status: 303,
             headers: {
-              "Location": "/"
-            }
-          })
-  
+              "Location": "/",
+            },
+          });
+
           const generatedPassword = passwordGenerator("*", 50);
           const hashedPassword = await hashPassword(generatedPassword);
           const user = await createUser({
             email,
             password: hashedPassword,
           });
-  
+
           const sessionId = await createSession(user.id);
-  
+
           setCookie(res2.headers, {
             name: "session_id",
             value: sessionId,
             path: "/",
             maxAge: 24 * 60 * 60,
           });
-  
+
           return res2;
         }
       } else {

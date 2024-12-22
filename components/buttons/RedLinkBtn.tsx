@@ -1,5 +1,5 @@
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { useState, useRef } from "preact/hooks";
+import { useRef, useState } from "preact/hooks";
 import { JSX } from "preact/jsx-runtime";
 
 interface btnArguments extends JSX.HTMLAttributes<HTMLAnchorElement> {

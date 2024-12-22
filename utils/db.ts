@@ -57,3 +57,12 @@ export async function getSession(sessionId: string): Promise<Session | null> {
 export async function destroySession(sessionId: string): Promise<void> {
   await kv.delete(["sessions", sessionId]);
 }
+
+export async function createCode(email: string): Promise<number> {
+  const code: number = Math.round(Math.random() * (999999 - 100000) + 100000);
+  if (await kv.get(["codes", email])) {
+    await kv.delete(["codes", email]);
+  }
+  await kv.set(["codes", email], {code: code, date: Date.now()})
+  return code;
+}

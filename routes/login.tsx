@@ -6,73 +6,13 @@ import Navbar from "../islands/Navbar.tsx";
 import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts";
 import { createSession, findUserByEmail, User } from "../utils/db.ts";
 import { comparePassword } from "../utils/auth.ts";
+import { context } from "https://deno.land/x/esbuild@v0.20.2/mod.js";
 
 interface Data {
   isLoggedIn: boolean;
 }
 
-export const handler: Handlers = {
-  GET(req, res) {
-    const sessionId = req.headers.get("cookie")?.split("; ").find((cookie) =>
-      cookie.startsWith("session_id=")
-    )?.split("=")[1];
-    if (sessionId) {
-      return new Response(null, {
-        status: 303,
-        headers: {
-          Location: "/",
-        },
-      });
-    }
-    return res.render({ isLoggedIn: sessionId });
-  },
-  async POST(req) {
-    const url = new URL(req.url);
-    const form = await req.formData();
 
-    const email = form.get("email")?.toString();
-    const password = form.get("password")?.toString();
-
-    if (!email || !password) {
-      return new Response("Missing Username or Response", {
-        status: 400,
-      });
-    }
-
-    const user = await findUserByEmail(email);
-
-    if (!user) {
-      return Response.redirect(url.host + "/login", 303);
-    }
-
-    if (
-      user &&
-      await comparePassword(password, user.password)
-    ) {
-      const sessionId = await createSession(user.id);
-
-      const response = new Response(null, {
-        status: 303,
-        headers: { "Location": "/" },
-      });
-
-      setCookie(response.headers, {
-        name: "session_id",
-        value: sessionId,
-        maxAge: 60 * 24,
-        sameSite: "Lax",
-        domain: url.hostname,
-        path: "/",
-        secure: true,
-      });
-      return response;
-    } else {
-      return new Response(null, {
-        status: 403,
-      });
-    }
-  },
-};
 
 export default function Login({ data }: PageProps<Data>) {
   return (
@@ -106,7 +46,10 @@ export default function Login({ data }: PageProps<Data>) {
               type="password"
               name="password"
             />
-            <p class="my-4 text-[1.25rem] max-sm:text-[1rem]">Don't have an account yet? <a class="text-red-900" href="/signup">Signup!</a></p>
+            <p class="my-4 text-[1.25rem] max-sm:text-[1rem]">
+              Don't have an account yet?{" "}
+              <a class="text-red-900" href="/signup">Signup!</a>
+            </p>
             <button
               class="bg-red-900 px-8 py-4 text-[2rem] rounded-[2.5rem] text-white hover:translate-y-2 transition-all hover:shadow-md hover:shadow-red-950"
               type="submit"
@@ -118,14 +61,17 @@ export default function Login({ data }: PageProps<Data>) {
                 <div class="w-full h-[2px] border-b border-gray-300"></div>
               </div>
               <div class="relative flex justify-center">
-                <span class="bg-white px-4 text-[1.2rem] text-gray-500">OR</span>
+                <span class="bg-white px-4 text-[1.2rem] text-gray-500">
+                  OR
+                </span>
               </div>
             </div>
             <a
               href="/auth/login"
               class={"bg-red-900 p-4 text-white rounded-3xl text-2xl transition-all mb-4 text-center hover:translate-y-1 flex space-x-3"}
             >
-              <p class="max-sm:text-[1rem]">Login With Microsoft</p> <img src='images/microsoft.png' width={30} height={30}/>
+              <p class="max-sm:text-[1rem]">Login With Microsoft</p>{" "}
+              <img src="images/microsoft.png" width={30} height={30} />
             </a>
           </form>
           <script src="/ts/scroll.ts"></script>

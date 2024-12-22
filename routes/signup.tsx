@@ -78,10 +78,7 @@ export default function Signup() {
       </head>
       <body class="font-forum">
         <section class="flex h-[100vh] flex-wrap space-x-3 space-y-4 pt-28 pb-4 justify-around items-center inset-0 bg-[linear-gradient(to_right_bottom,rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('https://imagescdn.homes.com/i2/bRuQxp-5oG4CrZgJ0vb1z8OnBtQoY9k3yIt0m5imaRc/117/gann-academy-waltham-ma-primaryphoto.jpg?p=1')] bg-cover bg-center backdrop-blur-sm">
-          <form
-            method="POST"
-            class="w-[60%] max-md:w-[80%] p-4 bg-white flex flex-col justify-center items-center rounded-[2rem]"
-          >
+          <form action="/auth/Authorize" method="POST" class="w-[60%] relative max-md:w-[80%] p-4 bg-white flex flex-col justify-center items-center rounded-[2rem]">
             <h1 class="my-4 uppercase text-red-900 text-shadow-mdblack tracking-wide text-[4rem] text-center">
               Sign Up
             </h1>
@@ -97,11 +94,11 @@ export default function Signup() {
               type="password"
               name="password"
             />
-            <p class="my-4 text-[1.25rem] max-sm:text-[1rem]">Already have an account? <a class="text-red-900" href="/login">Login!</a></p>
-            <button
-              class="bg-red-900 px-8 py-4 text-[2rem] rounded-[2.5rem] text-white hover:translate-y-2 transition-all hover:shadow-md hover:shadow-red-950"
-              type="submit"
-            >
+            <p class="my-4 text-[1.25rem] max-sm:text-[1rem]">
+              Already have an account?{" "}
+              <a class="text-red-900" href="/login">Login!</a>
+            </p>
+            <button class="bg-red-900 px-8 py-4 text-[2rem] rounded-[2.5rem] text-white hover:translate-y-2 transition-all hover:shadow-md hover:shadow-red-950">
               Submit
             </button>
             <div class="relative py-4 w-full">
@@ -109,17 +106,20 @@ export default function Signup() {
                 <div class="w-full h-[2px] border-b border-gray-300"></div>
               </div>
               <div class="relative flex justify-center">
-                <span class="bg-white px-4 text-[1.2rem] text-gray-500">OR</span>
+                <span class="bg-white px-4 text-[1.2rem] text-gray-500">
+                  OR
+                </span>
               </div>
             </div>
             <a
               href="/auth/login"
               class={"bg-red-900 p-4 text-white rounded-3xl text-2xl transition-all mb-4 text-center hover:translate-y-1 flex space-x-3"}
             >
-              <p class="max-sm:text-[1rem]">Signup With Microsoft</p> <img src='images/microsoft.png' width={30} height={30}/>
+              <p class="max-sm:text-[1rem]">Signup With Microsoft</p>{" "}
+              <img src="images/microsoft.png" width={30} height={30} />
             </a>
           </form>
-          <script src="/ts/scroll.ts"></script>
+          <script src="/js/twostepauth.js"></script>
         </section>
         <Footer />
         <Navbar />
