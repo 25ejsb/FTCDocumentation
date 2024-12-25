@@ -1,4 +1,4 @@
-const kv = await Deno.openKv(Deno.env.get("KV_DATABASE"));
+export const kv = await Deno.openKv(Deno.env.get("KV_DATABASE") as string);
 
 export interface User {
   id: string;
@@ -11,6 +11,11 @@ export interface Session {
   userId: string;
   createdAt: number;
   expiresAt: number;
+}
+
+export interface Code {
+  code: number;
+  date: Date;
 }
 
 export async function createUser(user: Omit<User, "id">): Promise<User> {
@@ -59,10 +64,11 @@ export async function destroySession(sessionId: string): Promise<void> {
 }
 
 export async function createCode(email: string): Promise<number> {
-  const code: number = Math.round(Math.random() * (999999 - 100000) + 100000);
+  const code = Math.round(Math.random() * (999999 - 100000) + 100000);
   if (await kv.get(["codes", email])) {
     await kv.delete(["codes", email]);
   }
-  await kv.set(["codes", email], {code: code, date: Date.now()})
+
+  await kv.set(["codes", email], { code: code, date: Date.now() });
   return code;
 }

@@ -6,7 +6,7 @@ export const handler: Handlers = {
   async DELETE(req, res) {
     const url = new URL(req.url);
     const kv = await Deno.openKv(
-      "https://api.deno.com/databases/1e831a73-22d1-4480-b16a-02fceb6a3af2/connect",
+      Deno.env.get("KV_DATABASE")?.toString(),
     );
 
     const { params } = await req.json();
