@@ -3,12 +3,13 @@ export const kv = await Deno.openKv(Deno.env.get("KV_DATABASE") as string);
 export interface User {
   id: string;
   email: string;
+  username?: string;
   password: string;
 }
 
 export interface Session {
   id: string;
-  userId: string;
+  email: string;
   createdAt: number;
   expiresAt: number;
 }
@@ -22,6 +23,9 @@ export async function createUser(user: Omit<User, "id">): Promise<User> {
   const id = crypto.randomUUID();
   const newUser = { ...user, id };
   await kv.set(["users", newUser.email], newUser);
+  await kv.set(["usernames", newUser.username as string], {
+    username: newUser.username,
+  });
   return newUser;
 }
 
@@ -31,13 +35,13 @@ export async function findUserByEmail(email: string): Promise<User | null> {
   return result.value;
 }
 
-export async function createSession(userId: string): Promise<string> {
+export async function createSession(email: string): Promise<string> {
   const sessionId = crypto.randomUUID();
   const now = Date.now();
 
   const session: Session = {
     id: sessionId,
-    userId,
+    email,
     createdAt: now,
     expiresAt: now + 24 * 60 * 60 * 1000, // 24 hours
   };

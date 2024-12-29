@@ -1,16 +1,16 @@
 import { FreshContext } from "$fresh/server.ts";
 import { getSession } from "../utils/db.ts";
 
-export interface State {
+export interface CtxState {
   session: {
-    userId?: string;
+    email?: string;
     isAuthenticated: boolean;
   };
 }
 
 export async function handler(
   req: Request,
-  ctx: FreshContext<State>,
+  ctx: FreshContext<CtxState>,
 ) {
   const sessionId = req.headers.get("cookie")
     ?.split("; ")
@@ -20,7 +20,7 @@ export async function handler(
   if (sessionId) {
     const session = await getSession(sessionId);
     ctx.state.session = session
-      ? { userId: session.userId, isAuthenticated: true }
+      ? { email: session.email, isAuthenticated: true }
       : { isAuthenticated: false };
   } else {
     ctx.state.session = { isAuthenticated: false };

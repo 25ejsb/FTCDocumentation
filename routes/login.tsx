@@ -7,24 +7,21 @@ import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts";
 import { createSession, findUserByEmail, User } from "../utils/db.ts";
 import { comparePassword } from "../utils/auth.ts";
 import { context } from "https://deno.land/x/esbuild@v0.20.2/mod.js";
+import { CtxState } from "./_middleware.ts";
 
 interface Data {
   "isLoggedIn": boolean;
   "error"?: string;
 }
 
-export const handler: Handlers = {
+export const handler: Handlers<Data, CtxState> = {
   GET(req, res) {
     const sessionId = req.headers.get("cookie")?.split("; ").find((cookie) =>
       cookie.startsWith("session_id=")
     )?.split("=")[1];
-    if (sessionId) {
-      return new Response(null, {
-        status: 303,
-        headers: {
-          Location: "/",
-        },
-      });
+
+    if (res.state.session.isAuthenticated || sessionId) {
+      return new Response(null, { status: 303, headers: { "Location": "/" } });
     }
     const url = new URL(req.url);
     const data = url.searchParams.get("data");
@@ -33,7 +30,7 @@ export const handler: Handlers = {
       response.isLoggedIn = sessionId != null;
       return res.render(response);
     } else {
-      return res.render({ "isLoggedIn": sessionId });
+      return res.render({ "isLoggedIn": sessionId != null });
     }
   },
   async POST(req, res) {
@@ -47,8 +44,12 @@ export const handler: Handlers = {
       return new Response("Missing Email or Response", {
         status: 301,
         headers: {
-          "Location": `/login?data=${encodeURIComponent(JSON.stringify({error: "Missing Email or Response"}))}`
-        }
+          "Location": `/login?data=${
+            encodeURIComponent(
+              JSON.stringify({ error: "Missing Email or Response" }),
+            )
+          }`,
+        },
       });
     }
 
@@ -57,7 +58,11 @@ export const handler: Handlers = {
     if (!user) {
       return new Response("User doesn't exist", {
         status: 301,
-        headers: {"Location": `/login?data=${encodeURIComponent(JSON.stringify({error: "User doesn't exist"}))}`}
+        headers: {
+          "Location": `/login?data=${
+            encodeURIComponent(JSON.stringify({ error: "User doesn't exist" }))
+          }`,
+        },
       });
     }
 
@@ -65,7 +70,7 @@ export const handler: Handlers = {
       user &&
       await comparePassword(password, user.password)
     ) {
-      const sessionId = await createSession(user.id);
+      const sessionId = await createSession(user.email);
 
       const response = new Response(null, {
         status: 303,
@@ -84,7 +89,7 @@ export const handler: Handlers = {
       return response;
     }
 
-    return new Response(null, {status: 401});
+    return new Response(null, { status: 401 });
   },
 };
 
@@ -113,19 +118,18 @@ export default function Login({ data }: PageProps<Data>) {
               class="border-none focus:outline-none shadow-md my-4 p-4 text-[2rem] max-sm:text-[1.25rem] rounded-2xl w-[70%] max-sm:w-[80%] bg-slate-200"
               type="email"
               name="email"
+              required
             />
             <input
               placeholder="Password"
               class="border-none focus:outline-none shadow-md my-8 p-4 text-[2rem] max-sm:text-[1.25rem] rounded-2xl w-[70%] max-sm:w-[80%] bg-slate-200"
               type="password"
               name="password"
+              required
             />
             {data.error
-            ? (
-              <p class="text-red-900">Error: {data.error}</p>
-            ): (
-              <p></p>
-            )}
+              ? <p class="text-red-900">Error: {data.error}</p>
+              : <p></p>}
             <p class="my-4 text-[1.25rem] max-sm:text-[1rem]">
               Don't have an account yet?{" "}
               <a class="text-red-900" href="/signup">Signup!</a>

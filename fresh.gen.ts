@@ -5,12 +5,11 @@
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_middleware from "./routes/_middleware.ts";
-import * as $api_keydeleter from "./routes/api/keydeleter.ts";
 import * as $api_logout from "./routes/api/logout.ts";
 import * as $api_signup from "./routes/api/signup.ts";
 import * as $auth_Authorize from "./routes/auth/Authorize.tsx";
 import * as $auth_login from "./routes/auth/login.ts";
-import * as $auth_mssignin from "./routes/auth/mssignin.ts";
+import * as $auth_mssignin from "./routes/auth/mssignin.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
 import * as $signup from "./routes/signup.tsx";
@@ -24,12 +23,11 @@ const manifest = {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/_middleware.ts": $_middleware,
-    "./routes/api/keydeleter.ts": $api_keydeleter,
     "./routes/api/logout.ts": $api_logout,
     "./routes/api/signup.ts": $api_signup,
     "./routes/auth/Authorize.tsx": $auth_Authorize,
     "./routes/auth/login.ts": $auth_login,
-    "./routes/auth/mssignin.ts": $auth_mssignin,
+    "./routes/auth/mssignin.tsx": $auth_mssignin,
     "./routes/index.tsx": $index,
     "./routes/login.tsx": $login,
     "./routes/signup.tsx": $signup,

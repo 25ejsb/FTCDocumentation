@@ -1,5 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 import { setCookie } from "$std/http/cookie.ts";
+import isLength from "https://deno.land/x/deno_validator@v0.0.5/lib/isLength.ts";
 import { comparePassword, hashPassword } from "../../utils/auth.ts";
 import {
   createSession,
@@ -7,6 +8,7 @@ import {
   findUserByEmail,
   kv,
 } from "../../utils/db.ts";
+import isAlphanumeric from "https://deno.land/x/deno_validator@v0.0.5/lib/isAlphanumeric.ts";
 
 interface CodeData {
   code: string;
@@ -18,11 +20,14 @@ export const handler: Handlers = {
     const formData = await req.formData();
 
     const email = formData.get("email")?.toString();
+    const username = formData.get("username")?.toString();
     const password = formData.get("password")?.toString();
     const passedCode = formData.get("code")?.toString();
 
-    if (!email || !password) {
-      return new Response("Missing Email or Password", { status: 404 });
+    if (!email || !username || !password) {
+      return new Response("Missing Username, Email or Password", {
+        status: 404,
+      });
     }
 
     const code = await kv.get<CodeData>(["codes", email]);
@@ -31,11 +36,32 @@ export const handler: Handlers = {
       return new Response("Code is Missing", { status: 404 });
     }
 
+    if (!isAlphanumeric(username) || !isLength(username, { min: 4, max: 20 })) {
+      return Response.json(null, {
+        status: 303,
+        headers: {
+          "Location": `/auth/Authorize?data=${
+            encodeURIComponent(
+              JSON.stringify({
+                email: email,
+                username: username,
+                password: password,
+                error:
+                  "The username must be between lengths 4-20, and the username should be alphanumeric",
+              }),
+            )
+          }`,
+        },
+      });
+    }
+
     const codeDate = code.value?.date as number;
     const currentDate = new Date();
 
     const time = 10 * 60 * 1000;
-    const difference = Math.abs(currentDate.getTime() - new Date(codeDate).getTime());
+    const difference = Math.abs(
+      currentDate.getTime() - new Date(codeDate).getTime(),
+    );
 
     if (difference > time) {
       await kv.delete(["codes", email]);
@@ -44,7 +70,13 @@ export const handler: Handlers = {
         headers: {
           "Location": `/auth/Authorize?data=${
             encodeURIComponent(
-              JSON.stringify({ email: email, password: password, error: "The code has expired, since it has been over 10 minutes" }),
+              JSON.stringify({
+                email: email,
+                username: username,
+                password: password,
+                error:
+                  "The code has expired, since it has been over 10 minutes",
+              }),
             )
           }`,
         },
@@ -64,10 +96,11 @@ export const handler: Handlers = {
       const hashedPassword = await hashPassword(password);
       const user = await createUser({
         email,
+        username: username,
         password: hashedPassword,
       });
 
-      const sessionId = await createSession(user.id);
+      const sessionId = await createSession(user.email);
 
       const res = new Response("Success!", {
         status: 301,
@@ -87,7 +120,12 @@ export const handler: Handlers = {
         headers: {
           "Location": `/auth/Authorize?data=${
             encodeURIComponent(
-              JSON.stringify({ email: email, password: password, error: "The code you sent is invalid." }),
+              JSON.stringify({
+                email: email,
+                username: username,
+                password: password,
+                error: "The code you sent is invalid.",
+              }),
             )
           }`,
         },

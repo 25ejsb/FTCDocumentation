@@ -5,14 +5,16 @@ import RedLinkBtn from "../components/buttons/RedLinkBtn.tsx";
 import Footer from "../islands/Footer.tsx";
 import Navbar from "../islands/Navbar.tsx";
 import { hashPassword } from "../utils/auth.ts";
-import { createSession, createUser, findUserByEmail } from "../utils/db.ts";
+import { createSession, createUser, findUserByEmail, kv } from "../utils/db.ts";
+import * as validator from "https://deno.land/x/deno_validator/mod.ts";
+import { CtxState } from "./_middleware.ts";
 
 interface Data {
   "isLoggedIn": boolean;
   "error"?: string;
 }
 
-export const handler: Handlers = {
+export const handler: Handlers<Data, CtxState> = {
   GET(req, res) {
     const sessionId = req.headers.get("cookie")?.split("; ").find((cookie) =>
       cookie.startsWith("session_id=")
@@ -33,12 +35,12 @@ export const handler: Handlers = {
       response.isLoggedIn = sessionId != null;
       return res.render(response);
     } else {
-      return res.render({ "isLoggedIn": sessionId });
+      return res.render({ "isLoggedIn": sessionId != null });
     }
   },
 };
 
-export default function Signup({data}: PageProps<Data>) {
+export default function Signup({ data }: PageProps<Data>) {
   return (
     <html lang="en">
       <head>
@@ -64,24 +66,35 @@ export default function Signup({data}: PageProps<Data>) {
               class="border-none focus:outline-none shadow-md my-4 p-4 text-[2rem] max-sm:text-[1.25rem] rounded-2xl w-[70%] max-sm:w-[80%] bg-slate-200"
               type="email"
               name="email"
+              required
+            />
+            <input
+              placeholder="Username"
+              class="border-none focus:outline-none shadow-md my-4 p-4 text-[2rem] max-sm:text-[1.25rem] rounded-2xl w-[70%] max-sm:w-[80%] bg-slate-200"
+              type="text"
+              name="username"
+              required
+              minLength={4}
+              maxlength={20}
             />
             <input
               placeholder="Password"
               class="border-none focus:outline-none shadow-md my-8 p-4 text-[2rem] max-sm:text-[1.25rem] rounded-2xl w-[70%] max-sm:w-[80%] bg-slate-200"
               type="password"
               name="password"
+              required
             />
             {data.error
-            ? (
-              <p class="text-red-900">Error: {data.error}</p>
-            ): (
-              <p></p>
-            )}
+              ? <p class="text-red-900">Error: {data.error}</p>
+              : <p></p>}
             <p class="my-4 text-[1.25rem] max-sm:text-[1rem]">
               Already have an account?{" "}
               <a class="text-red-900" href="/login">Login!</a>
             </p>
-            <button class="bg-red-900 px-8 py-4 text-[2rem] rounded-[2.5rem] text-white hover:translate-y-2 transition-all hover:shadow-md hover:shadow-red-950">
+            <button
+              type="submit"
+              class="bg-red-900 px-8 py-4 text-[2rem] rounded-[2.5rem] text-white hover:translate-y-2 transition-all hover:shadow-md hover:shadow-red-950"
+            >
               Submit
             </button>
             <div class="relative py-4 w-full">

@@ -3,14 +3,21 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import Footer from "../../islands/Footer.tsx";
 import Navbar from "../../islands/Navbar.tsx";
 import { comparePassword } from "../../utils/auth.ts";
-import { createCode, createSession, findUserByEmail, getSession, kv } from "../../utils/db.ts";
+import {
+  createCode,
+  createSession,
+  findUserByEmail,
+  getSession,
+  kv,
+} from "../../utils/db.ts";
 import sgMail from "npm:@sendgrid/mail";
 sgMail.setApiKey(Deno.env.get("SENDGRID_API_KEY") as string);
 
 interface LoginData {
   "email": string;
   "password": string;
-  "error"?: string
+  "username": string;
+  "error"?: string;
 }
 
 export const handler: Handlers = {
@@ -18,28 +25,36 @@ export const handler: Handlers = {
     const formData = await req.formData();
 
     const email = formData.get("email")?.toString();
+    const username = formData.get("username")?.toString();
     const password = formData.get("password")?.toString();
 
-    if (!email || !password) {
-      return new Response("Missing Username or Password", {
-         status: 301,
-         headers: {
+    if (!email || !username || !password) {
+      return new Response("Missing Email, Username or Password", {
+        status: 301,
+        headers: {
           "Location": `/signup?data=${
             encodeURIComponent(
-              JSON.stringify({error: "Missing Email or Password"}),
+              JSON.stringify({ error: "Missing Username, Email or Password" }),
             )
-          }`
-         }
+          }`,
+        },
       });
     }
 
-    if (await findUserByEmail(email)) {
-      return new Response("Email already exists!", {
+    if (
+      await findUserByEmail(email) ||
+      (await kv.get(["usernames", username])).value
+    ) {
+      return new Response("Email or Username already exists!", {
         status: 301,
         headers: {
-          "Location": `/signup?data=${encodeURIComponent(JSON.stringify({error: "Email already Exists!"}))}`
-        }
-      })
+          "Location": `/signup?data=${
+            encodeURIComponent(
+              JSON.stringify({ error: "Email or Username already Exists!" }),
+            )
+          }`,
+        },
+      });
     }
 
     const code = await createCode(email);
@@ -58,7 +73,11 @@ export const handler: Handlers = {
     //   console.log(err);
     // })
 
-    return res.render({ "email": email, "password": password });
+    return res.render({
+      "email": email,
+      "username": username,
+      "password": password,
+    });
   },
   GET(req, res) {
     const url = new URL(req.url);
@@ -97,6 +116,7 @@ export default function Authorize({ data }: PageProps<LoginData>) {
               Two Step Authentication
             </h1>
             <input type="hidden" name="email" value={data.email} />
+            <input type="hidden" name="username" value={data.username} />
             <input type="hidden" name="password" value={data.password} />
             <p class="text-center my-4">
               We've just sent a code to your email, please enter the code here.
@@ -113,13 +133,7 @@ export default function Authorize({ data }: PageProps<LoginData>) {
             >
               Submit
             </button>
-            {data.error
-              ? (
-                <p class="text-red-900">{data.error}</p>
-              ): (
-                <p></p>
-              )
-            }
+            {data.error ? <p class="text-red-900">{data.error}</p> : <p></p>}
           </form>
         </section>
         <Navbar />
