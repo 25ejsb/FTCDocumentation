@@ -1,19 +1,31 @@
 import { JSX } from "preact/jsx-runtime";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { useEffect, useState } from "preact/hooks";
+import { getSession, kv, User } from "../utils/db.ts";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [session, setSession] = useState({ isAuthenticated: false, user: {} });
 
   useEffect(() => {
+    sessionData();
     const sessionId = document.cookie.split("; ").find((cookie) =>
       cookie.startsWith("session_id=")
     )?.split("=")[1];
     if (sessionId) {
       setIsLoggedIn(true);
-      console.log(sessionId);
     }
   }, []);
+
+  const sessionData = async () => {
+    try {
+      const response = await fetch("/api/getSessionData");
+      const data = await response.json();
+      setSession(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <nav
@@ -52,6 +64,13 @@ export default function Navbar() {
               </a>
             </>
           )}
+        {session.user != null
+          ? (
+            <a href="#" class="hover:text-shadow-mdwhite md:text-start">
+              @{(session.user as User).username}
+            </a>
+          )
+          : <></>}
       </div>
       <button id="menu-button" class="hidden max-md:flex">
         <img id="menu-button-image" src="/images/svg/menu.svg" alt="Menu" />
@@ -97,6 +116,16 @@ export default function Navbar() {
               </a>
             </>
           )}
+        {session.user != null
+          ? (
+            <a
+              href="#"
+              class="hover:text-shadow-mdwhite md:text-start text-white text-4xl tracking-wide"
+            >
+              @{(session.user as User).username}
+            </a>
+          )
+          : <></>}
       </div>
       <script src="/js/nav.js"></script>
     </nav>
