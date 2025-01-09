@@ -1,0 +1,20 @@
+{
+  "terminals": [
+    {
+      "splitTerminals": [
+        {
+          "name": "start",
+          "commands": ["deno upgrade", "deno task start"]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "kview",
+          "commands": ["kview", "deno task start"]
+        }
+      ]
+    }
+  ]
+}

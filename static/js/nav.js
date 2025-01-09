@@ -2,7 +2,7 @@ const navbar = document.getElementById("nav");
 let activatedMenu = false;
 
 setInterval(() => {
-  if (window.scrollY > 50 || activatedMenu) {
+  if (globalThis.scrollY > 50 || activatedMenu) {
     navbar.style.backgroundColor = "rgba(0,0,0,0.5)";
   } else {
     navbar.style.backgroundColor = "transparent";

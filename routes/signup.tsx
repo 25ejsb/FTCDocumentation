@@ -118,7 +118,7 @@ export default function Signup({ data }: PageProps<Data>) {
           <script src="/js/twostepauth.js"></script>
         </section>
         <Footer />
-        <Navbar />
+        <Navbar noBackgroundOnStart={true} />
       </body>
     </html>
   );

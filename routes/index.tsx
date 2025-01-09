@@ -155,7 +155,7 @@ export default function Home() {
           />
         </section>
         <Footer />
-        <Navbar />
+        <Navbar noBackgroundOnStart={true} />
       </body>
     </html>
   );

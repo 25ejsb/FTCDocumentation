@@ -161,7 +161,7 @@ export default function Login({ data }: PageProps<Data>) {
           <script src="/ts/scroll.ts"></script>
         </section>
         <Footer />
-        <Navbar />
+        <Navbar noBackgroundOnStart={true} />
       </body>
     </html>
   );

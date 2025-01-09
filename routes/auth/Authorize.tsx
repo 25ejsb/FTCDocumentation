@@ -136,7 +136,7 @@ export default function Authorize({ data }: PageProps<LoginData>) {
             {data.error ? <p class="text-red-900">{data.error}</p> : <p></p>}
           </form>
         </section>
-        <Navbar />
+        <Navbar noBackgroundOnStart={true} />
         <Footer />
       </body>
     </html>

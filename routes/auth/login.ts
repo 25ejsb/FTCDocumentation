@@ -27,7 +27,7 @@ export const handler: Handlers = {
 
       // Generate authorization URL
       const authCodeUrlParameters = {
-        scopes: ["user.read"],
+        scopes: ["User.Read"],
         redirectUri: url.protocol + "//" + url.host + "/auth/mssignin",
       };
 

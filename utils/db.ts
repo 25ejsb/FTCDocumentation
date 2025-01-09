@@ -3,8 +3,9 @@ export const kv = await Deno.openKv(Deno.env.get("KV_DATABASE") as string);
 export interface User {
   id: string;
   email: string;
-  username?: string;
+  username: string;
   password: string;
+  profilePicture?: string;
 }
 
 export interface Session {
@@ -21,11 +22,8 @@ export interface Code {
 
 export async function createUser(user: Omit<User, "id">): Promise<User> {
   const id = crypto.randomUUID();
-  const newUser = { ...user, id };
+  const newUser = { ...user, id, profilePicture: "./images/rabbi.webp" };
   await kv.set(["users", newUser.email], newUser);
-  await kv.set(["usernames", newUser.username as string], {
-    username: newUser.username,
-  });
   return newUser;
 }
 

@@ -14,7 +14,6 @@ import {
 } from "../../utils/db.ts";
 import { passwordGenerator } from "https://deno.land/x/password_generator/mod.ts";
 import isAlphanumeric from "https://deno.land/x/deno_validator@v0.0.5/lib/isAlphanumeric.ts";
-
 interface Data {
   email: string;
   password: string;
@@ -44,7 +43,14 @@ export const handler: Handlers = {
       // Token request parameters
       const tokenRequest = {
         code,
-        scopes: ["openid", "profile", "email", "user.read"],
+        scopes: [
+          "User.Read",
+          "profile",
+          "email",
+          "User.Read.All",
+          "Calendars.Read",
+          "Files.Read.All",
+        ],
         redirectUri: Deno.env.get("REDIRECT_URI") || "",
       };
 
@@ -186,7 +192,7 @@ export default function mssignin({ data }: PageProps<Data>) {
           </form>
         </section>
         <Footer />
-        <Navbar />
+        <Navbar noBackgroundOnStart={true} />
       </body>
     </html>
   );

@@ -3,7 +3,11 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import { useEffect, useState } from "preact/hooks";
 import { getSession, kv, User } from "../utils/db.ts";
 
-export default function Navbar() {
+interface Data extends JSX.HTMLAttributes<HTMLElement> {
+  noBackgroundOnStart: boolean;
+}
+
+export default function Navbar(props: Data) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [session, setSession] = useState({ isAuthenticated: false, user: {} });
 
@@ -66,7 +70,7 @@ export default function Navbar() {
           )}
         {session.user != null
           ? (
-            <a href="#" class="hover:text-shadow-mdwhite md:text-start">
+            <a href="/account" class="hover:text-shadow-mdwhite md:text-start">
               @{(session.user as User).username}
             </a>
           )
@@ -119,7 +123,7 @@ export default function Navbar() {
         {session.user != null
           ? (
             <a
-              href="#"
+              href="/account"
               class="hover:text-shadow-mdwhite md:text-start text-white text-4xl tracking-wide"
             >
               @{(session.user as User).username}
@@ -127,7 +131,17 @@ export default function Navbar() {
           )
           : <></>}
       </div>
-      <script src="/js/nav.js"></script>
+      {props.noBackgroundOnStart
+        ? (
+          <>
+            <script src="/js/nav.js"></script>
+          </>
+        )
+        : (
+          <>
+            <script src="/js/allBackground.js"></script>
+          </>
+        )}
     </nav>
   );
 }
