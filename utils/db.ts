@@ -1,4 +1,6 @@
 export const kv = await Deno.openKv(Deno.env.get("KV_DATABASE") as string);
+import isAlphanumeric from "https://deno.land/x/deno_validator@v0.0.5/lib/isAlphanumeric.ts";
+import { isLength } from "https://deno.land/x/deno_validator@v0.0.5/mod.ts";
 
 export interface User {
   id: string;
@@ -6,6 +8,7 @@ export interface User {
   username: string;
   password: string;
   profilePicture?: string;
+  description?: string;
 }
 
 export interface Session {
@@ -23,6 +26,7 @@ export interface Code {
 export async function createUser(user: Omit<User, "id">): Promise<User> {
   const id = crypto.randomUUID();
   const newUser = { ...user, id, profilePicture: "./images/rabbi.webp" };
+  await kv.set(["usernames", newUser.username], { username: newUser.username });
   await kv.set(["users", newUser.email], newUser);
   return newUser;
 }

@@ -11,6 +11,7 @@ import {
   createUser,
   findUserByEmail,
   kv,
+  User,
 } from "../../utils/db.ts";
 import { passwordGenerator } from "https://deno.land/x/password_generator/mod.ts";
 import isAlphanumeric from "https://deno.land/x/deno_validator@v0.0.5/lib/isAlphanumeric.ts";
@@ -108,6 +109,12 @@ export const handler: Handlers = {
       return new Response("Missing Username!", { status: 400 });
     }
 
+    if ((await kv.get(["usernames", username])).value) {
+      return new Response("Username already is used by another account", {
+        status: 400,
+      });
+    }
+
     if (!isLength(username, { min: 4, max: 20 }) || !isAlphanumeric(username)) {
       return new Response(
         "The username must be between lengths 4-20, and the username should be alphanumeric",
@@ -134,7 +141,6 @@ export const handler: Handlers = {
       username: username,
       password: hashedPassword,
     });
-
     const sessionId = await createSession(user.email);
 
     const res = new Response("Success!", {

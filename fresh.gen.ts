@@ -6,6 +6,9 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_middleware from "./routes/_middleware.ts";
 import * as $account from "./routes/account.tsx";
+import * as $api_changeDescription from "./routes/api/changeDescription.ts";
+import * as $api_changeUsername from "./routes/api/changeUsername.ts";
+import * as $api_deleteProfilePicture from "./routes/api/deleteProfilePicture.ts";
 import * as $api_getSessionData from "./routes/api/getSessionData.ts";
 import * as $api_logout from "./routes/api/logout.ts";
 import * as $api_signup from "./routes/api/signup.ts";
@@ -26,6 +29,9 @@ const manifest = {
     "./routes/_app.tsx": $_app,
     "./routes/_middleware.ts": $_middleware,
     "./routes/account.tsx": $account,
+    "./routes/api/changeDescription.ts": $api_changeDescription,
+    "./routes/api/changeUsername.ts": $api_changeUsername,
+    "./routes/api/deleteProfilePicture.ts": $api_deleteProfilePicture,
     "./routes/api/getSessionData.ts": $api_getSessionData,
     "./routes/api/logout.ts": $api_logout,
     "./routes/api/signup.ts": $api_signup,

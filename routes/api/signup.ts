@@ -86,6 +86,21 @@ export const handler: Handlers = {
     if (
       parseInt(code.value?.code as string) == parseInt(passedCode as string)
     ) {
+      if (
+        !isLength(username, { min: 4, max: 20 }) || !isAlphanumeric(username)
+      ) {
+        return new Response(
+          "The username must be between lengths 4-20, and the username should be alphanumeric",
+          { status: 400 },
+        );
+      }
+
+      if ((await kv.get(["usernames", username])).value) {
+        return new Response("Username already is used by another account", {
+          status: 400,
+        });
+      }
+
       const existingUser = await findUserByEmail(email);
       if (existingUser) {
         return new Response("Email already Exists!", { status: 404 });

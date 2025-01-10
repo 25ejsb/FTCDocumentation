@@ -78,30 +78,91 @@ export default function Account({ data }: PageProps<Data>) {
           <h1 class="text-red-900 uppercase tracking-wide text-[3.5rem] text-shadow-mdblack text-center">
             Account Settings
           </h1>
-          <h2 class="tracking-wide text-[2.5rem]">@{data.user.username}</h2>
-          <form
-            method="post"
-            encType="multipart/form-data"
-            class="flex flex-col space-y-4"
-            required
-          >
-            <input
-              type="file"
-              name="profilePicture"
-              id="profilePicture"
-              accept="image/*"
-              title=""
-              class="hidden"
-            />
-            <button
-              id="profileBtn"
-              class="w-[10rem] h-[10rem] rounded-full shadow-md shadow-black bg-transparent"
-              style={`background-image: url(${data.user.profilePicture}); background-size: 100%; background-position: center;`}
-              alt="Profile Picture"
+          <h2 class="tracking-wide text-[2.5rem] mb-8">
+            @{data.user.username}
+          </h2>
+          <div class="flex justify-around w-full flex-wrap">
+            <form
+              method="post"
+              encType="multipart/form-data"
+              class="flex flex-col space-y-4"
+              required
             >
-            </button>
-            <button type="submit">Set Profile Picture</button>
-          </form>
+              <input
+                type="file"
+                name="profilePicture"
+                id="profilePicture"
+                accept="image/*"
+                title=""
+                class="hidden"
+              />
+              <button
+                id="profileBtn"
+                class="w-[15rem] h-[15rem] rounded-full shadow-md shadow-black bg-transparent"
+                style={`background-image: url(${data.user.profilePicture}); background-size: 100%; background-position: center;`}
+                alt="Profile Picture"
+              >
+              </button>
+              <button
+                class="p-4 bg-red-900 rounded-[2rem] text-lg text-center text-white hover:shadow-mdblack hover:translate-y-[-0.25rem] active:translate-y-[0.25rem] transition-all"
+                type="submit"
+              >
+                Set Profile Picture
+              </button>
+              <a
+                href="/api/deleteProfilePicture"
+                class="p-4 bg-red-900 text-center rounded-[2rem] text-lg text-white hover:shadow-mdblack hover:translate-y-[-0.25rem] active:translate-y-[0.25rem] transition-all"
+                type="submit"
+              >
+                Delete Profile Picture
+              </a>
+            </form>
+            <div class="flex flex-col">
+              <form
+                method="post"
+                id="descriptionForm"
+                action="/api/changeDescription"
+                class="flex flex-col space-y-4 items-center mb-4"
+              >
+                <h1 class="text-[2rem] text-center font-semibold">
+                  Description
+                </h1>
+                <textarea
+                  type="text"
+                  name="description"
+                  id="description"
+                  maxLength={100}
+                  class="w-[40rem] bg-slate-100 focus:outline-none p-4 text-[1.5rem] resize-none h-[10rem]"
+                  placeholder="Description"
+                >
+                  {data.user.description}
+                </textarea>
+                <button
+                  id="submitDescription"
+                  class="bg-red-900 w-[20rem] rounded-[2rem] text-white p-4 hover:shadow-mdblack hover:translate-y-[-0.25rem] active:translate-y-1 transition-all"
+                >
+                  Change Description
+                </button>
+              </form>
+              <form
+                action="/api/changeDescription"
+                method="post"
+                id="usernameForm"
+                class="flex flex-col space-x-4 items-center"
+              >
+                <h1 class="text-[2rem] text-center font-semibold">
+                  Change Username
+                </h1>
+                <input
+                  type="text"
+                  name="username"
+                  class="w-[40rem] bg-slate-100 focus:outline-none p-4 text-[1.5rem]"
+                  id="username"
+                  placeholder={`${data.user.username}`}
+                />
+              </form>
+            </div>
+          </div>
         </section>
         <script src="/js/profile.js"></script>
         <Navbar noBackgroundOnStart={false} />
