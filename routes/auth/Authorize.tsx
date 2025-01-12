@@ -11,6 +11,7 @@ import {
   kv,
 } from "../../utils/db.ts";
 import sgMail from "npm:@sendgrid/mail";
+import { isAlphanumeric, isLength } from "https://deno.land/x/deno_validator@v0.0.5/mod.ts";
 sgMail.setApiKey(Deno.env.get("SENDGRID_API_KEY") as string);
 
 interface LoginData {
@@ -27,6 +28,25 @@ export const handler: Handlers = {
     const email = formData.get("email")?.toString();
     const username = formData.get("username")?.toString();
     const password = formData.get("password")?.toString();
+
+    if (!isAlphanumeric(username!) || !isLength(username!, { min: 4, max: 20 })) {
+      return Response.json(null, {
+        status: 303,
+        headers: {
+          "Location": `/signup?data=${
+            encodeURIComponent(
+              JSON.stringify({
+                email: email,
+                username: username,
+                password: password,
+                error:
+                  "The username must be between lengths 4-20, and the username should be alphanumeric",
+              }),
+            )
+          }`,
+        },
+      });
+    }
 
     if (!email || !username || !password) {
       return new Response("Missing Email, Username or Password", {
@@ -59,19 +79,24 @@ export const handler: Handlers = {
 
     const code = await createCode(email);
 
-    // sgMail.send({
-    //   to: email,
-    //   from: "eitan.brochstein@gmail.com",
-    //   subject: "FTC Gann Documentation Authorization Code",
-    //   html: `<h1>Your Authorization Code is ${code.toString()}</h1>`,
-    // })
-    // .then(response => {
-    //   console.log(response[0].statusCode);
-    //   console.log(response[0].headers)
-    // })
-    // .catch(err => {
-    //   console.log(err);
-    // })
+    sgMail.send({
+      to: email,
+      from: "eitan.brochstein@gmail.com",
+      subject: "FTC Gann Documentation Authorization Code",
+      html: `
+        <h2>Hello @${username}!</h2><br>
+        <p>Welcome to the FTC Gann Documentation, We're glad to have you here!</p>
+        <h1>Your Authorization Code for ${email} is ${code.toString()}</h1>
+        <p>If you need any support, contact 28ebrochstein@gannacademy.org</p>
+      `,
+    })
+    .then(response => {
+      console.log(response[0].statusCode);
+      console.log(response[0].headers)
+    })
+    .catch(err => {
+      console.log(err);
+    })
 
     return res.render({
       "email": email,

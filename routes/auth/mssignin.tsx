@@ -34,7 +34,7 @@ export const handler: Handlers = {
       const pca = new PublicClientApplication({
         auth: {
           clientId: Deno.env.get("CLIENT_ID") || "",
-          authority: `https://login.microsoftonline.com/${
+          authority: `https://login.microsoftonline.com/common/${
             Deno.env.get("TENANT_ID")
           }`,
           clientSecret: Deno.env.get("CLIENT_SECRET") || "", // Critical: include client secret
@@ -48,9 +48,6 @@ export const handler: Handlers = {
           "User.Read",
           "profile",
           "email",
-          "User.Read.All",
-          "Calendars.Read",
-          "Files.Read.All",
         ],
         redirectUri: Deno.env.get("REDIRECT_URI") || "",
       };

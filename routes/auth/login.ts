@@ -5,7 +5,7 @@ import { Configuration, PublicClientApplication } from "../../deps.ts";
 export const msalConfig: Configuration = {
   auth: {
     clientId: Deno.env.get("CLIENT_ID") || "",
-    authority: `https://login.microsoftonline.com/${Deno.env.get("TENANT_ID")}`,
+    authority: `https://login.microsoftonline.com/common/${Deno.env.get("TENANT_ID")}`,
     clientSecret: Deno.env.get("CLIENT_SECRET") || "",
   },
   system: {

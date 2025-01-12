@@ -36,25 +36,6 @@ export const handler: Handlers = {
       return new Response("Code is Missing", { status: 404 });
     }
 
-    if (!isAlphanumeric(username) || !isLength(username, { min: 4, max: 20 })) {
-      return Response.json(null, {
-        status: 303,
-        headers: {
-          "Location": `/auth/Authorize?data=${
-            encodeURIComponent(
-              JSON.stringify({
-                email: email,
-                username: username,
-                password: password,
-                error:
-                  "The username must be between lengths 4-20, and the username should be alphanumeric",
-              }),
-            )
-          }`,
-        },
-      });
-    }
-
     const codeDate = code.value?.date as number;
     const currentDate = new Date();
 
