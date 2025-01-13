@@ -81,13 +81,14 @@ export default function Account({ data }: PageProps<Data>) {
           <h2 class="tracking-wide text-[2.5rem] mb-8">
             @{data.user.username}
           </h2>
-          <div class="flex justify-around w-full flex-wrap">
+          <div class="flex justify-around w-full space-x-16 max-md:space-x-0 max-md:space-y-4 max-md:flex-wrap">
             <form
               method="post"
               encType="multipart/form-data"
-              class="flex flex-col space-y-4"
+              class="flex flex-col space-y-4 w-[15rem]"
               required
             >
+              <h1 class="text-3xl text-center font-semibold">Profile Picture</h1>
               <input
                 type="file"
                 name="profilePicture"
@@ -98,26 +99,26 @@ export default function Account({ data }: PageProps<Data>) {
               />
               <button
                 id="profileBtn"
-                class="w-[15rem] h-[15rem] rounded-full shadow-md shadow-black bg-transparent"
+                class="w-full pb-[100%] rounded-full shadow-md shadow-black bg-transparent"
                 style={`background-image: url(${data.user.profilePicture}); background-size: 100%; background-position: center;`}
                 alt="Profile Picture"
               >
               </button>
               <button
-                class="p-4 bg-red-900 rounded-[2rem] text-lg text-center text-white hover:shadow-mdblack hover:translate-y-[-0.25rem] active:translate-y-[0.25rem] transition-all"
+                class="p-4 bg-red-900 rounded-[2rem] text-lg max-lg:text-sm text-center text-white hover:shadow-mdblack hover:translate-y-[-0.25rem] active:translate-y-[0.25rem] transition-all"
                 type="submit"
               >
-                Set Profile Picture
+                Set Picture
               </button>
               <a
                 href="/api/deleteProfilePicture"
-                class="p-4 bg-red-900 text-center rounded-[2rem] text-lg text-white hover:shadow-mdblack hover:translate-y-[-0.25rem] active:translate-y-[0.25rem] transition-all"
+                class="p-4 bg-red-900 text-center rounded-[2rem] text-lg max-lg:text-sm text-white hover:shadow-mdblack hover:translate-y-[-0.25rem] active:translate-y-[0.25rem] transition-all"
                 type="submit"
               >
-                Delete Profile Picture
+                Delete Picture
               </a>
             </form>
-            <div class="flex flex-col">
+            <div class="flex flex-col w-[40rem]">
               <form
                 method="post"
                 id="descriptionForm"
@@ -132,34 +133,40 @@ export default function Account({ data }: PageProps<Data>) {
                   name="description"
                   id="description"
                   maxLength={100}
-                  class="w-[40rem] bg-slate-100 focus:outline-none p-4 text-[1.5rem] resize-none h-[10rem]"
+                  class="w-full shrink bg-slate-100 focus:outline-none p-4 text-[1.5rem] resize-none h-[10rem]"
                   placeholder="Description"
                 >
                   {data.user.description}
                 </textarea>
                 <button
                   id="submitDescription"
-                  class="bg-red-900 w-[20rem] rounded-[2rem] text-white p-4 hover:shadow-mdblack hover:translate-y-[-0.25rem] active:translate-y-1 transition-all"
+                  class="bg-red-900 w-[50%] max-sm:w-[75%] max-sm:text-sm rounded-[2rem] text-white p-4 hover:shadow-mdblack hover:translate-y-[-0.25rem] active:translate-y-1 transition-all"
                 >
                   Change Description
                 </button>
               </form>
               <form
-                action="/api/changeDescription"
+                action="/api/changeUsername"
                 method="post"
                 id="usernameForm"
-                class="flex flex-col space-x-4 items-center"
+                class="flex flex-col space-y-4 items-center"
               >
                 <h1 class="text-[2rem] text-center font-semibold">
-                  Change Username
+                  Username
                 </h1>
                 <input
                   type="text"
                   name="username"
-                  class="w-[40rem] bg-slate-100 focus:outline-none p-4 text-[1.5rem]"
+                  class="w-full bg-slate-100 focus:outline-none p-4 text-[1.5rem]"
                   id="username"
                   placeholder={`${data.user.username}`}
                 />
+                <button
+                  id="submitDescription"
+                  class="bg-red-900 w-[50%] max-sm:w-[75%] max-sm:text-sm rounded-[2rem] text-white p-4 hover:shadow-mdblack hover:translate-y-[-0.25rem] active:translate-y-1 transition-all"
+                >
+                  Change Username
+                </button>
               </form>
             </div>
           </div>

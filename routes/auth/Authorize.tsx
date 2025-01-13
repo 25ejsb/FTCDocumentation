@@ -11,7 +11,10 @@ import {
   kv,
 } from "../../utils/db.ts";
 import sgMail from "npm:@sendgrid/mail";
-import { isAlphanumeric, isLength } from "https://deno.land/x/deno_validator@v0.0.5/mod.ts";
+import {
+  isAlphanumeric,
+  isLength,
+} from "https://deno.land/x/deno_validator@v0.0.5/mod.ts";
 sgMail.setApiKey(Deno.env.get("SENDGRID_API_KEY") as string);
 
 interface LoginData {
@@ -29,7 +32,9 @@ export const handler: Handlers = {
     const username = formData.get("username")?.toString();
     const password = formData.get("password")?.toString();
 
-    if (!isAlphanumeric(username!) || !isLength(username!, { min: 4, max: 20 })) {
+    if (
+      !isAlphanumeric(username!) || !isLength(username!, { min: 4, max: 20 })
+    ) {
       return Response.json(null, {
         status: 303,
         headers: {
@@ -90,13 +95,13 @@ export const handler: Handlers = {
         <p>If you need any support, contact 28ebrochstein@gannacademy.org</p>
       `,
     })
-    .then(response => {
-      console.log(response[0].statusCode);
-      console.log(response[0].headers)
-    })
-    .catch(err => {
-      console.log(err);
-    })
+      .then((response) => {
+        console.log(response[0].statusCode);
+        console.log(response[0].headers);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     return res.render({
       "email": email,

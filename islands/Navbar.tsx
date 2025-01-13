@@ -44,33 +44,33 @@ export default function Navbar(props: Data) {
         />
         <h1 class="text-white text-5xl max-sm:hidden">RABBI</h1>
       </a>
-      <div class="flex items-center justify-center space-x-4 text-white text-2xl max-md:hidden">
-        <a href="/#" class="hover:text-shadow-mdwhite md:text-start">Home</a>
-        <a href="#" class="hover:text-shadow-mdwhite md:text-start">
+      <div class="flex items-center justify-center space-x-4 text-white text-3xl max-md:hidden">
+        <a href="/#" class="hover:text-shadow-mdwhite text-2xl max-lg:text-lg md:text-start">Home</a>
+        <a href="#" class="hover:text-shadow-mdwhite text-2xl max-lg:text-lg md:text-start">
           Documentation
         </a>
         {isLoggedIn
           ? (
             <a
               href="/api/logout"
-              class="hover:text-shadow-mdwhite md:text-start"
+              class="hover:text-shadow-mdwhite text-2xl max-lg:text-lg md:text-start"
             >
               Log Out
             </a>
           )
           : (
             <>
-              <a href="/login" class="hover:text-shadow-mdwhite md:text-start">
+              <a href="/login" class="hover:text-shadow-mdwhite max-lg:text-lg text-2xl md:text-start">
                 Log In
               </a>
-              <a href="/signup" class="hover:text-shadow-mdwhite md:text-start">
+              <a href="/signup" class="hover:text-shadow-mdwhite max-lg:text-lg text-2xl md:text-start">
                 Sign Up
               </a>
             </>
           )}
         {session.user != null
           ? (
-            <a href="/account" class="hover:text-shadow-mdwhite md:text-start">
+            <a href="/account" class="hover:text-shadow-mdwhite max-lg:text-lg text-2xl md:text-start">
               @{(session.user as User).username}
             </a>
           )

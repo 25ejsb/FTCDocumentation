@@ -15,6 +15,7 @@ import * as $api_signup from "./routes/api/signup.ts";
 import * as $auth_Authorize from "./routes/auth/Authorize.tsx";
 import * as $auth_login from "./routes/auth/login.ts";
 import * as $auth_mssignin from "./routes/auth/mssignin.tsx";
+import * as $documentation from "./routes/documentation.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
 import * as $signup from "./routes/signup.tsx";
@@ -38,6 +39,7 @@ const manifest = {
     "./routes/auth/Authorize.tsx": $auth_Authorize,
     "./routes/auth/login.ts": $auth_login,
     "./routes/auth/mssignin.tsx": $auth_mssignin,
+    "./routes/documentation.tsx": $documentation,
     "./routes/index.tsx": $index,
     "./routes/login.tsx": $login,
     "./routes/signup.tsx": $signup,

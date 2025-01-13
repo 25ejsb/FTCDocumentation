@@ -26,7 +26,10 @@ export interface Code {
 export async function createUser(user: Omit<User, "id">): Promise<User> {
   const id = crypto.randomUUID();
   const newUser = { ...user, id, profilePicture: "./images/rabbi.webp" };
-  await kv.set(["usernames", newUser.username], { username: newUser.username });
+  await kv.set(["usernames", newUser.username], {
+    email: newUser.email,
+    username: newUser.username,
+  });
   await kv.set(["users", newUser.email], newUser);
   return newUser;
 }

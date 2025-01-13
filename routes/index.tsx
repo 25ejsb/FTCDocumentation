@@ -15,7 +15,7 @@ export default function Home() {
       </head>
       <body class="font-forum">
         <section class="flex flex-wrap space-x-3 space-y-4 min-h-[80vh] max-sm:min-h-[90vh] px-8 max-md:pt-20 justify-around items-center inset-0 bg-[linear-gradient(to_right_bottom,rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('https://imagescdn.homes.com/i2/bRuQxp-5oG4CrZgJ0vb1z8OnBtQoY9k3yIt0m5imaRc/117/gann-academy-waltham-ma-primaryphoto.jpg?p=1')] bg-cover bg-center backdrop-blur-sm">
-          <div class="lg:w-[40rem] max-lg:w-[20rem] max-md:w-full max-lg:shrink-0 h-full flex items-center justify-center flex-col shrink">
+          <div class="lg:w-[40rem] max-lg:w-[25rem] max-md:w-full max-lg:shrink-0 h-full flex items-center justify-center flex-col shrink">
             <h1 class="text-6xl max-md:text-4xl font-bold text-white text-shadow-mdwhite text-center">
               FTC Gann Documentation
             </h1>
@@ -25,14 +25,14 @@ export default function Home() {
             </p>
             <div class="flex space-x-4">
               <RedLinkBtn
-                class="hover:shadow-mdwhite"
+                class="hover:shadow-mdwhite max-sm:text-lg"
                 text="Get Started"
-                link="https://google.com"
+                link="#getstarted"
               />
               <RedLinkBtn
-                class="hover:shadow-mdwhite"
-                text="Admin Login"
-                link="https://google.com"
+                class="hover:shadow-mdwhite max-sm:text-lg"
+                text="Documentation"
+                link="/documentation"
               />
             </div>
           </div>
@@ -45,7 +45,7 @@ export default function Home() {
           </div>
           <script src="/ts/scroll.ts"></script>
         </section>
-        <section class="flex px-12 py-16 items-center justify-center flex-col bg-slate-100">
+        <section id="#getstarted" class="flex px-12 py-16 items-center justify-center flex-col bg-slate-100">
           <h1 class="text-6xl font-bold mb-8 flex">
             About<p class="ml-4 text-red-900 tracking-wide">RABBI</p>
           </h1>
