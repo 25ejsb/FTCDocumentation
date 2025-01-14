@@ -25,31 +25,31 @@ import * as $Navbar from "./islands/Navbar.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
-  routes: {
-    "./routes/_404.tsx": $_404,
-    "./routes/_app.tsx": $_app,
-    "./routes/_middleware.ts": $_middleware,
-    "./routes/account.tsx": $account,
-    "./routes/api/changeDescription.ts": $api_changeDescription,
-    "./routes/api/changeUsername.ts": $api_changeUsername,
-    "./routes/api/deleteProfilePicture.ts": $api_deleteProfilePicture,
-    "./routes/api/getSessionData.ts": $api_getSessionData,
-    "./routes/api/logout.ts": $api_logout,
-    "./routes/api/signup.ts": $api_signup,
-    "./routes/auth/Authorize.tsx": $auth_Authorize,
-    "./routes/auth/login.ts": $auth_login,
-    "./routes/auth/mssignin.tsx": $auth_mssignin,
-    "./routes/documentation.tsx": $documentation,
-    "./routes/index.tsx": $index,
-    "./routes/login.tsx": $login,
-    "./routes/signup.tsx": $signup,
-  },
-  islands: {
-    "./islands/Counter.tsx": $Counter,
-    "./islands/Footer.tsx": $Footer,
-    "./islands/Navbar.tsx": $Navbar,
-  },
-  baseUrl: import.meta.url,
+	routes: {
+		"./routes/_404.tsx": $_404,
+		"./routes/_app.tsx": $_app,
+		"./routes/_middleware.ts": $_middleware,
+		"./routes/account.tsx": $account,
+		"./routes/api/changeDescription.ts": $api_changeDescription,
+		"./routes/api/changeUsername.ts": $api_changeUsername,
+		"./routes/api/deleteProfilePicture.ts": $api_deleteProfilePicture,
+		"./routes/api/getSessionData.ts": $api_getSessionData,
+		"./routes/api/logout.ts": $api_logout,
+		"./routes/api/signup.ts": $api_signup,
+		"./routes/auth/Authorize.tsx": $auth_Authorize,
+		"./routes/auth/login.ts": $auth_login,
+		"./routes/auth/mssignin.tsx": $auth_mssignin,
+		"./routes/documentation.tsx": $documentation,
+		"./routes/index.tsx": $index,
+		"./routes/login.tsx": $login,
+		"./routes/signup.tsx": $signup,
+	},
+	islands: {
+		"./islands/Counter.tsx": $Counter,
+		"./islands/Footer.tsx": $Footer,
+		"./islands/Navbar.tsx": $Navbar,
+	},
+	baseUrl: import.meta.url,
 } satisfies Manifest;
 
 export default manifest;
