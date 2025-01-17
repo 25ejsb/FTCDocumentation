@@ -26,15 +26,31 @@ export default function Documentation() {
 						</p>
 						<Search />
 						<div class="flex space-x-4">
-							<RedLinkBtn link="/documentation/getStarted" text="Get Started" />
-							<RedLinkBtn link="/forums" text="Forums & Support"></RedLinkBtn>
+							<RedLinkBtn
+								link="/documentation/getStarted"
+								text="Get Started"
+							/>
+							<RedLinkBtn link="/forums" text="Forums & Support">
+							</RedLinkBtn>
 						</div>
 					</div>
 				</section>
-				<section id="pages" class="p-[6rem] flex justify-center items-center flex-col">
-					<h1 class="text-red-900 text-5xl font-semibold tracking-wide">Documentation Pages</h1>
-					<div class="flex">
-						<a href="#">Add Page</a>
+				<section
+					id="pages"
+					class="p-[6rem] flex justify-center items-center flex-col space-y-4"
+				>
+					<h1 class="text-red-900 text-5xl font-semibold tracking-wide">
+						Documentation Sections
+					</h1>
+					<div class="flex space-y-4 space-x-4">
+						<div class="w-[12rem] h-[7.5rem] bg-red-900 rounded-[2rem] flex justify-center items-center hover:translate-y-[-0.5rem] active:translate-y-2 hover:shadow-mdblack transition-all">
+							<a
+								href="/adminpage"
+								class="w-full text-center text-white text-2xl"
+							>
+								+ Add Section
+							</a>
+						</div>
 					</div>
 				</section>
 				<Navbar noBackgroundOnStart={true} />

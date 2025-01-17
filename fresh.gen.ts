@@ -6,6 +6,7 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_middleware from "./routes/_middleware.ts";
 import * as $account from "./routes/account.tsx";
+import * as $adminpage from "./routes/adminpage.tsx";
 import * as $api_changeDescription from "./routes/api/changeDescription.ts";
 import * as $api_changeUsername from "./routes/api/changeUsername.ts";
 import * as $api_deleteProfilePicture from "./routes/api/deleteProfilePicture.ts";
@@ -16,6 +17,7 @@ import * as $auth_Authorize from "./routes/auth/Authorize.tsx";
 import * as $auth_login from "./routes/auth/login.ts";
 import * as $auth_mssignin from "./routes/auth/mssignin.tsx";
 import * as $documentation from "./routes/documentation.tsx";
+import * as $documentation_section_item_ from "./routes/documentation/[section]/[item].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
 import * as $signup from "./routes/signup.tsx";
@@ -30,6 +32,7 @@ const manifest = {
 		"./routes/_app.tsx": $_app,
 		"./routes/_middleware.ts": $_middleware,
 		"./routes/account.tsx": $account,
+		"./routes/adminpage.tsx": $adminpage,
 		"./routes/api/changeDescription.ts": $api_changeDescription,
 		"./routes/api/changeUsername.ts": $api_changeUsername,
 		"./routes/api/deleteProfilePicture.ts": $api_deleteProfilePicture,
@@ -40,6 +43,8 @@ const manifest = {
 		"./routes/auth/login.ts": $auth_login,
 		"./routes/auth/mssignin.tsx": $auth_mssignin,
 		"./routes/documentation.tsx": $documentation,
+		"./routes/documentation/[section]/[item].tsx":
+			$documentation_section_item_,
 		"./routes/index.tsx": $index,
 		"./routes/login.tsx": $login,
 		"./routes/signup.tsx": $signup,

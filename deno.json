@@ -26,11 +26,7 @@
 		"$std/": "https://deno.land/std@0.216.0/",
 		"validator": "npm:validator@^13.12.0"
 	},
-	"fmt": {
-		"proseWrap": "never",
-		"indentWidth": 4,
-		"useTabs": true
-	},
+	"fmt": { "proseWrap": "never", "indentWidth": 4, "useTabs": true },
 	"compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
 	"nodeModulesDir": "auto"
 }
