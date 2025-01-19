@@ -1,4 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
+import ClassicButton from "../components/buttons/ClassicButton.tsx";
+import DefaultInput from "../components/inputs/DefaultInput.tsx";
 import ClassicText from "../components/texts/ClassicText.tsx";
 import Footer from "../islands/Footer.tsx";
 import Navbar from "../islands/Navbar.tsx";
@@ -61,25 +63,35 @@ export default function AdminPage({ data }: PageProps<Data>) {
 								<button
 									style={`background-image: linear-gradient(to bottom, rgba(127, 29, 29, 0.1), rgba(127, 29, 29, 1)), url('https://www.thepublicdiscourse.com/wp-content/uploads/2023/09/BOOKS.jpg'); background-size: 150%; background-position: center; background-repeat: no-repeat`}
 									class="flex text-white text-lg items-end justify-center text-center bg-red-900 w-[10rem] h-[7rem] p-4 rounded-2xl hover:shadow-mdblack hover:translate-y-2 transition-all"
+									id="new-section"
 								>
 									+ New Section
 								</button>
 								<button
 									style={`background-image: linear-gradient(to bottom, rgba(218, 160, 109, 0.1), rgba(218, 160, 109, 1)), url('https://miro.medium.com/v2/resize:fit:5120/1*42ebJizcUtZBNIZPmmMZ5Q.jpeg'); background-size: 120%; background-position: center; background-repeat: no-repeat`}
 									class="flex text-white text-lg items-end justify-center text-center bg-red-900 w-[10rem] h-[7rem] p-4 rounded-2xl hover:shadow-mdblack hover:translate-y-2 transition-all"
+									id="new-page"
 								>
 									+ New Page
 								</button>
 							</div>
-							<div class="shadow-mdblack w-[25rem] h-[15rem] mt-4 flex justify-center items-center">
+							<form
+								method="post"
+								class="shadow-mdblack w-[25rem] h-[15rem] mt-4 hidden justify-center items-center flex-col"
+								id="new-section-form"
+							>
 								<ClassicText
 									text="New Section"
 									class="text-3xl"
 								/>
-							</div>
+								<DefaultInput class="rounded-none text-2xl" />
+								<ClassicButton text="Submit" type="submit">
+								</ClassicButton>
+							</form>
 						</div>
 					</div>
 				</section>
+				<script src="/js/adminpage.js"></script>
 				<Navbar noBackgroundOnStart={false} />
 				<Footer />
 			</body>
