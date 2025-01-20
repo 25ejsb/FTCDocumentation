@@ -9,6 +9,7 @@ export interface User {
 	password: string;
 	profilePicture?: string;
 	description?: string;
+	admin: boolean;
 }
 
 export interface Session {
@@ -21,6 +22,11 @@ export interface Session {
 export interface Code {
 	code: number;
 	date: Date;
+}
+
+export interface Section {
+	name: string;
+	position: number;
 }
 
 export async function createUser(user: Omit<User, "id">): Promise<User> {
@@ -80,4 +86,27 @@ export async function createCode(email: string): Promise<number> {
 
 	await kv.set(["codes", email], { code: code, date: Date.now() });
 	return code;
+}
+
+export async function createSection(section: Section) {
+	const allEntries = await Array.fromAsync(
+		kv.list<Section>({ prefix: ["sections"] }),
+	);
+	const positions: Array<number> = allEntries.map((section) =>
+		section.value.position
+	);
+	if (section.position > 0) {
+		await kv.set(["sections", section.name], { ...section });
+		if (positions.includes(section.position)) {
+			allEntries.forEach(async (entry) => {
+				if (entry.value.position >= section.position) {
+					await kv.delete(["sections", entry.value.name])
+					await kv.set(["sections", entry.value.name], {
+						...entry.value,
+						position: entry.value.position+1,
+					});
+				}
+			});
+		}
+	}
 }

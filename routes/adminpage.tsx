@@ -76,7 +76,8 @@ export default function AdminPage({ data }: PageProps<Data>) {
 								</button>
 							</div>
 							<form
-								method="post"
+								method="POST"
+								action="/api/addSection"
 								class="shadow-mdblack w-[25rem] h-[15rem] mt-4 hidden justify-center items-center flex-col"
 								id="new-section-form"
 							>
@@ -84,9 +85,14 @@ export default function AdminPage({ data }: PageProps<Data>) {
 									text="New Section"
 									class="text-3xl"
 								/>
-								<DefaultInput class="rounded-none text-2xl" />
-								<ClassicButton text="Submit" type="submit">
-								</ClassicButton>
+								<div class="flex">
+									<DefaultInput
+										class="rounded-none text-2xl"
+										name="section"
+									/>
+									<DefaultInput class="rounded-none text-2xl" name="position"/>
+								</div>
+								<ClassicButton text="Submit" type="submit" />
 							</form>
 						</div>
 					</div>
