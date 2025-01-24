@@ -70,7 +70,7 @@ export const handler: Handlers = {
 					setCookie(res.headers, {
 						name: "session_id",
 						value: sessionId,
-						maxAge: 60 * 24,
+						maxAge: 31536000,
 						sameSite: "Lax",
 						domain: url.hostname,
 						path: "/",
@@ -147,6 +147,7 @@ export const handler: Handlers = {
 			email,
 			username: username,
 			password: hashedPassword,
+			admin: false
 		});
 		const sessionId = await createSession(user.email);
 
@@ -159,7 +160,7 @@ export const handler: Handlers = {
 			name: "session_id",
 			value: sessionId,
 			path: "/",
-			maxAge: 24 * 60 * 60,
+			maxAge: 31536000,
 		});
 		return res;
 	},

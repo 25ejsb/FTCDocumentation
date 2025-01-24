@@ -87,7 +87,7 @@ export const handler: Handlers<Data, CtxState> = {
 			setCookie(response.headers, {
 				name: "session_id",
 				value: sessionId,
-				maxAge: 60 * 24,
+				maxAge: 31536000,
 				sameSite: "Lax",
 				domain: url.hostname,
 				path: "/",

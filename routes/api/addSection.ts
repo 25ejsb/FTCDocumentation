@@ -13,7 +13,7 @@ export const handler: Handlers<Data, CtxState> = {
 		const formData = await req.formData();
 
 		const section = formData.get("section")?.toString();
-        const position = formData.get("position")?.toString();
+		const position = formData.get("position")?.toString();
 
 		if (res.state.session.isAuthenticated) {
 			const user = (await kv.get<User>([
@@ -21,8 +21,15 @@ export const handler: Handlers<Data, CtxState> = {
 				res.state.session!.email as string,
 			])).value;
 			if (user!.admin === true) {
-				if (section && position && isLength(section, { min: 3, max: 30 }) && parseInt(position) >= 0) {
-					await createSection({ name: section, position: parseInt(position) });
+				if (
+					section && position &&
+					isLength(section, { min: 3, max: 30 }) &&
+					parseInt(position) >= 0
+				) {
+					await createSection({
+						name: section,
+						position: parseInt(position),
+					});
 					return new Response("Success", {
 						status: 301,
 						headers: { "Location": "/adminpage" },
