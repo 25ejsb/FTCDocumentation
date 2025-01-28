@@ -28,5 +28,6 @@ document.querySelectorAll(".save-section").forEach((section) => {
 				),
 			}),
 		});
+		window.location.reload();
 	});
 });

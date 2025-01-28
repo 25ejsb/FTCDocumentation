@@ -89,42 +89,22 @@ export async function createCode(email: string): Promise<number> {
 }
 
 export async function createSection(section: Section) {
-	let allEntries = await Array.fromAsync(
+	const allEntries = await Array.fromAsync(
 		kv.list<Section>({ prefix: ["sections"] }),
 	);
-	let positions: Array<number> = allEntries.map((thissection) =>
+	const positions: Array<number> = allEntries.map((thissection) =>
 		thissection.value.position
 	);
+	const movingSections: Array<Section> = [];
 	if (section.position > 0) {
-		await kv.set(["sections", section.name], { ...section });
-		if (positions.includes(section.position)) {
-			allEntries.forEach(async (entry) => {
-				positions = allEntries.map((thisection) =>
-					thisection.value.position
-				);
-				if (
-					entry.value.position >= section.position &&
-					positions.includes(entry.value.position - 1)
-				) {
-					await kv.delete(["sections", entry.value.name]);
-					await kv.set(["sections", entry.value.name], {
-						...entry.value,
-						position: entry.value.position + 1,
-					});
-				}
-			});
-			allEntries.forEach(async (entry) => {
-				if (
-					entry.value.position == section.position &&
-					entry.value.name != section.name
-				) {
-					await kv.delete(["sections", entry.value.name]);
-					await kv.set(["sections", entry.value.name], {
-						...entry.value,
-						position: entry.value.position + 1,
-					});
-				}
-			});
-		}
+		await kv.set(["sections", section.name], {...section})
+		allEntries.forEach(e => {
+			if (positions.includes(e.value.position-1) && e.value.position > section.position && e.value.name !== section.name || section.position === e.value.position && e.value.name !== section.name) {
+				movingSections.push(e.value);
+			}
+		})
 	}
+	movingSections.forEach(async e => {
+		await kv.set(["sections", e.name], {...e, position: e.position+1})
+	})
 }
