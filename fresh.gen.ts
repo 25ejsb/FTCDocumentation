@@ -13,6 +13,7 @@ import * as $api_changeUsername from "./routes/api/changeUsername.ts";
 import * as $api_deleteProfilePicture from "./routes/api/deleteProfilePicture.ts";
 import * as $api_getSessionData from "./routes/api/getSessionData.ts";
 import * as $api_logout from "./routes/api/logout.ts";
+import * as $api_saveSection from "./routes/api/saveSection.ts";
 import * as $api_signup from "./routes/api/signup.ts";
 import * as $auth_Authorize from "./routes/auth/Authorize.tsx";
 import * as $auth_login from "./routes/auth/login.ts";
@@ -40,6 +41,7 @@ const manifest = {
 		"./routes/api/deleteProfilePicture.ts": $api_deleteProfilePicture,
 		"./routes/api/getSessionData.ts": $api_getSessionData,
 		"./routes/api/logout.ts": $api_logout,
+		"./routes/api/saveSection.ts": $api_saveSection,
 		"./routes/api/signup.ts": $api_signup,
 		"./routes/auth/Authorize.tsx": $auth_Authorize,
 		"./routes/auth/login.ts": $auth_login,

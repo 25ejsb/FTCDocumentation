@@ -54,7 +54,7 @@ export async function createSession(email: string): Promise<string> {
 		id: sessionId,
 		email,
 		createdAt: now,
-		expiresAt: now + 24 * 60 * 60 * 1000, // 24 hours
+		expiresAt: now + 12 * 30 * 24 * 60 * 60 * 1000, // 1 year
 	};
 
 	await kv.set(["sessions", sessionId], session);
@@ -99,10 +99,12 @@ export async function createSection(section: Section) {
 		await kv.set(["sections", section.name], { ...section });
 		if (positions.includes(section.position)) {
 			allEntries.forEach(async (entry) => {
-				positions = allEntries.map((thisection) => thisection.value.position);
+				positions = allEntries.map((thisection) =>
+					thisection.value.position
+				);
 				if (
 					entry.value.position >= section.position &&
-					positions.includes(entry.value.position-1)
+					positions.includes(entry.value.position - 1)
 				) {
 					await kv.delete(["sections", entry.value.name]);
 					await kv.set(["sections", entry.value.name], {
@@ -112,14 +114,17 @@ export async function createSection(section: Section) {
 				}
 			});
 			allEntries.forEach(async (entry) => {
-				if (entry.value.position == section.position && entry.value.name != section.name) {
+				if (
+					entry.value.position == section.position &&
+					entry.value.name != section.name
+				) {
 					await kv.delete(["sections", entry.value.name]);
 					await kv.set(["sections", entry.value.name], {
 						...entry.value,
 						position: entry.value.position + 1,
 					});
 				}
-			})
+			});
 		}
 	}
 }

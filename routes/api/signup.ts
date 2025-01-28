@@ -99,8 +99,7 @@ export const handler: Handlers = {
 				email,
 				username: username,
 				password: hashedPassword,
-				admin: false
-				
+				admin: false,
 			});
 
 			const sessionId = await createSession(user.email);

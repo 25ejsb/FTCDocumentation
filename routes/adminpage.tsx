@@ -12,7 +12,7 @@ interface Data {
 	"isLoggedIn": boolean;
 	"error"?: string;
 	"user": User;
-	"sections": Array<Deno.KvEntry<Section>>
+	"sections": Array<Deno.KvEntry<Section>>;
 }
 
 export const handler: Handlers<Data, CtxState> = {
@@ -25,7 +25,11 @@ export const handler: Handlers<Data, CtxState> = {
 				"users",
 				res.state.session.email as string,
 			])).value;
-			return res.render({ isLoggedIn: true, "user": user as User, sections: allEntries });
+			return res.render({
+				isLoggedIn: true,
+				"user": user as User,
+				sections: allEntries,
+			});
 		}
 		return new Response(null, {
 			status: 302,
@@ -88,7 +92,12 @@ export default function AdminPage({ data }: PageProps<Data>) {
 							>
 								<div class="flex p-4 space-x-4">
 									<div class="flex flex-col">
-										<label class="text-lg" htmlFor="section">Name:</label>
+										<label
+											class="text-lg"
+											htmlFor="section"
+										>
+											Name:
+										</label>
 										<DefaultInput
 											class="rounded-none text-2xl w-full"
 											name="section"
@@ -96,7 +105,12 @@ export default function AdminPage({ data }: PageProps<Data>) {
 										/>
 									</div>
 									<div class="flex flex-col w-[40%]">
-										<label class="text-lg" htmlFor="position">Index:</label>
+										<label
+											class="text-lg"
+											htmlFor="position"
+										>
+											Index:
+										</label>
 										<DefaultInput
 											class="rounded-none text-2xl w-full"
 											type="number"
@@ -110,18 +124,39 @@ export default function AdminPage({ data }: PageProps<Data>) {
 									type="submit"
 								/>
 							</form>
-							<ClassicText text="Sections" class="m-4 text-5xl"/>
-							<div class="w-[60%] h-[30rem] bg-slate-100">
-								{data.sections.map(entry => (
-									<div class="flex w-full items-center h-[3rem]">
-										<input type="text" class="w-[60%] p-2 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full" value={entry.value.name} />
-										<input type="text" class="w-[20%] p-2 border-spacing-1 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full" value={entry.value.position} />
-										<a href="#" class="flex justify-center w-[10%] h-full items-center bg-slate-50">
-											<img src="/images/svg/save.svg" alt="Save" class="w-[50%] h-[50%] bg-slate-50" />
-										</a>
-										<a href="#" class="flex justify-center w-[10%] h-full items-center bg-slate-50">
-											<img src="/images/svg/delete.svg" alt="Delete" class="w-[50%] h-[50%] bg-slate-50" />
-										</a>
+							<ClassicText text="Sections" class="m-4 text-5xl" />
+							<div class="w-[60%] h-[30rem] bg-slate-100 flex flex-col">
+								{data.sections.map((entry) => (
+									<div class={"flex w-full items-center h-[3rem] order-" + entry.value.position}>
+										<input
+											type="text"
+											class="w-[60%] p-2 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full section-name"
+											value={entry.value.name}
+										/>
+										<input
+											type="hidden"
+											class="section-current-name"
+											value={entry.value.name}
+										/>
+										<input
+											type="text"
+											class="w-[20%] p-2 border-spacing-1 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full section-position"
+											value={entry.value.position}
+										/>
+										<button class="flex justify-center w-[10%] h-full items-center bg-slate-50 save-section">
+											<img
+												src="/images/svg/save.svg"
+												alt="Save"
+												class="w-[50%] h-[50%] bg-slate-50"
+											/>
+										</button>
+										<button class="flex justify-center w-[10%] h-full items-center bg-slate-50 delete-section">
+											<img
+												src="/images/svg/delete.svg"
+												alt="Delete"
+												class="w-[50%] h-[50%] bg-slate-50"
+											/>
+										</button>
 									</div>
 								))}
 							</div>
