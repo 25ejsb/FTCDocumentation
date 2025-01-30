@@ -127,7 +127,10 @@ export default function AdminPage({ data }: PageProps<Data>) {
 							<ClassicText text="Sections" class="m-4 text-5xl" />
 							<div class="w-[60%] h-[30rem] bg-slate-100 flex flex-col">
 								{data.sections.map((entry) => (
-									<div class={"flex w-full items-center h-[3rem] order-" + entry.value.position}>
+									<div
+										class={"flex w-full items-center h-[3rem] order-" +
+											entry.value.position}
+									>
 										<input
 											type="text"
 											class="w-[60%] p-2 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full section-name"
@@ -135,8 +138,8 @@ export default function AdminPage({ data }: PageProps<Data>) {
 										/>
 										<input
 											type="hidden"
-											class="section-current-name"
-											value={entry.value.name}
+											class="section-id"
+											value={entry.value.id}
 										/>
 										<input
 											type="text"

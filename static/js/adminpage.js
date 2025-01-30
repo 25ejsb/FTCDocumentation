@@ -17,10 +17,10 @@ document.querySelectorAll(".save-section").forEach((section) => {
 		await fetch("/api/saveSection", {
 			method: "POST",
 			body: JSON.stringify({
-				currentName: section.parentElement.querySelector(
-					".section-current-name",
+				id: section.parentElement.querySelector(
+					".section-id",
 				).value,
-				sectionName:
+				name:
 					section.parentElement.querySelector(".section-name").value,
 				position: parseInt(
 					section.parentElement.querySelector(".section-position")

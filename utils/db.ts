@@ -25,6 +25,7 @@ export interface Code {
 }
 
 export interface Section {
+	id: string;
 	name: string;
 	position: number;
 }
@@ -97,14 +98,20 @@ export async function createSection(section: Section) {
 	);
 	const movingSections: Array<Section> = [];
 	if (section.position > 0) {
-		await kv.set(["sections", section.name], {...section})
-		allEntries.forEach(e => {
-			if (positions.includes(e.value.position-1) && e.value.position > section.position && e.value.name !== section.name || section.position === e.value.position && e.value.name !== section.name) {
+		await kv.set(["sections", section.name], { ...section });
+		allEntries.forEach((e) => {
+			if (
+				positions.includes(e.value.position - 1) &&
+					e.value.position > section.position &&
+					e.value.name !== section.name ||
+				section.position === e.value.position &&
+					e.value.name !== section.name
+			) {
 				movingSections.push(e.value);
 			}
-		})
+		});
 	}
-	movingSections.forEach(async e => {
-		await kv.set(["sections", e.name], {...e, position: e.position+1})
-	})
+	movingSections.forEach(async (e) => {
+		await kv.set(["sections", e.name], { ...e, position: e.position + 1 });
+	});
 }

@@ -27,6 +27,7 @@ export const handler: Handlers<Data, CtxState> = {
 					parseInt(position) >= 0
 				) {
 					await createSection({
+						id: crypto.randomUUID(),
 						name: section,
 						position: parseInt(position),
 					});
