@@ -17,6 +17,13 @@ interface Data {
 export const handler: Handlers<Data, CtxState> = {
 	async POST(req, res) {
 		const json = await req.json() as SectionParameters;
+<<<<<<< HEAD
+=======
+		
+        if (!json.name || !json.position) {
+            return new Response("Missing Position or Section Name", {status: STATUS_CODE.BadRequest})
+        }
+>>>>>>> ddfa57a (lol)
 
 		if (!json.name || !json.position) {
 			return new Response("Missing Position or Section Name", {
@@ -24,6 +31,7 @@ export const handler: Handlers<Data, CtxState> = {
 			});
 		}
 
+<<<<<<< HEAD
 		if (!res.state.session.isAuthenticated) {
 			return new Response("User isn't authenticated", {
 				status: STATUS_CODE.Unauthorized,
@@ -43,6 +51,11 @@ export const handler: Handlers<Data, CtxState> = {
 		let positions: Array<number> = allEntries.map((thissection) =>
 			thissection.value.position
 		);
+=======
+        const section = (await kv.get<Section>(["sections", json.id])).value as Section;
+
+		await kv.set(["sections", json.id], {id: section.id, name: json.name, position: json.position})
+>>>>>>> ddfa57a (lol)
 		return new Response("Success", { status: 303 });
 	},
 };
