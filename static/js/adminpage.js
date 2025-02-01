@@ -14,7 +14,7 @@ newsection.addEventListener("click", (e) => {
 document.querySelectorAll(".save-section").forEach((section) => {
 	section.addEventListener("click", async (e) => {
 		console.log(section.parentElement);
-		await fetch("/api/saveSection", {
+		await fetch("/api/sections/saveSection", {
 			method: "POST",
 			body: JSON.stringify({
 				id: section.parentElement.querySelector(

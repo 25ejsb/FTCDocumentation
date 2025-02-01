@@ -1,7 +1,7 @@
 import { Handlers, STATUS_CODE } from "$fresh/server.ts";
 import { bold } from "$std/fmt/colors.ts";
-import { kv, Section } from "../../utils/db.ts";
-import { CtxState } from "../_middleware.ts";
+import { kv, Section } from "../../../utils/db.ts";
+import { CtxState } from "../../_middleware.ts";
 
 interface SectionParameters {
 	id: string;

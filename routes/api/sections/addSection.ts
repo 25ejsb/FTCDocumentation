@@ -1,6 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
-import { createSection, kv, Section, User } from "../../utils/db.ts";
-import { CtxState } from "../_middleware.ts";
+import { createSection, kv, Section, User } from "../../../utils/db.ts";
+import { CtxState } from "../../_middleware.ts";
 import isLength from "https://deno.land/x/deno_validator@v0.0.5/lib/isLength.ts";
 
 interface Data {

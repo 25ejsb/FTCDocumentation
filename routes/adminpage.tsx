@@ -86,7 +86,7 @@ export default function AdminPage({ data }: PageProps<Data>) {
 							</div>
 							<form
 								method="POST"
-								action="/api/addSection"
+								action="/api/sections/addSection"
 								class="shadow-mdblack w-[25rem] h-[15rem] mt-4 hidden justify-center items-center flex-col"
 								id="new-section-form"
 							>
@@ -128,8 +128,8 @@ export default function AdminPage({ data }: PageProps<Data>) {
 							<div class="w-[60%] h-[30rem] bg-slate-100 flex flex-col">
 								{data.sections.map((entry) => (
 									<div
-										class={"flex w-full items-center h-[3rem] order-" +
-											entry.value.position}
+										style={"order: " + entry.value.position + ";"}
+										class={"flex w-full items-center h-[3rem]"}
 									>
 										<input
 											type="text"
