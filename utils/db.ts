@@ -90,6 +90,7 @@ export async function createCode(email: string): Promise<number> {
 }
 
 export async function createSection(section: Section) {
+<<<<<<< HEAD
 	const allEntries = await Array.fromAsync(
 		kv.list<Section>({ prefix: ["sections"] }),
 	);
@@ -97,4 +98,7 @@ export async function createSection(section: Section) {
 		thissection.value.position
 	);
 	await kv.set(["sections", section.id], {...section});
+=======
+	await kv.set(["sections", section.id], {...section})
+>>>>>>> ddfa57a (lol)
 }
