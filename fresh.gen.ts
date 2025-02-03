@@ -7,13 +7,14 @@ import * as $_app from "./routes/_app.tsx";
 import * as $_middleware from "./routes/_middleware.ts";
 import * as $account from "./routes/account.tsx";
 import * as $adminpage from "./routes/adminpage.tsx";
-import * as $api_addSection from "./routes/api/sections/addSection.ts";
 import * as $api_changeDescription from "./routes/api/changeDescription.ts";
 import * as $api_changeUsername from "./routes/api/changeUsername.ts";
 import * as $api_deleteProfilePicture from "./routes/api/deleteProfilePicture.ts";
 import * as $api_getSessionData from "./routes/api/getSessionData.ts";
 import * as $api_logout from "./routes/api/logout.ts";
-import * as $api_saveSection from "./routes/api/sections/saveSection.ts";
+import * as $api_sections_addSection from "./routes/api/sections/addSection.ts";
+import * as $api_sections_deleteSection from "./routes/api/sections/deleteSection.ts";
+import * as $api_sections_saveSection from "./routes/api/sections/saveSection.ts";
 import * as $api_signup from "./routes/api/signup.ts";
 import * as $auth_Authorize from "./routes/auth/Authorize.tsx";
 import * as $auth_login from "./routes/auth/login.ts";
@@ -35,13 +36,14 @@ const manifest = {
 		"./routes/_middleware.ts": $_middleware,
 		"./routes/account.tsx": $account,
 		"./routes/adminpage.tsx": $adminpage,
-		"./routes/api/addSection.ts": $api_addSection,
 		"./routes/api/changeDescription.ts": $api_changeDescription,
 		"./routes/api/changeUsername.ts": $api_changeUsername,
 		"./routes/api/deleteProfilePicture.ts": $api_deleteProfilePicture,
 		"./routes/api/getSessionData.ts": $api_getSessionData,
 		"./routes/api/logout.ts": $api_logout,
-		"./routes/api/saveSection.ts": $api_saveSection,
+		"./routes/api/sections/addSection.ts": $api_sections_addSection,
+		"./routes/api/sections/deleteSection.ts": $api_sections_deleteSection,
+		"./routes/api/sections/saveSection.ts": $api_sections_saveSection,
 		"./routes/api/signup.ts": $api_signup,
 		"./routes/auth/Authorize.tsx": $auth_Authorize,
 		"./routes/auth/login.ts": $auth_login,

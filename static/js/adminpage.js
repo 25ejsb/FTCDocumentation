@@ -31,3 +31,17 @@ document.querySelectorAll(".save-section").forEach((section) => {
 		window.location.reload();
 	});
 });
+
+document.querySelectorAll(".delete-section").forEach((section) => {
+	section.addEventListener("click", async (e) => {
+		await fetch("/api/sections/deleteSection", {
+			method: "POST",
+			body: JSON.stringify({
+				id: section.parentElement.querySelector(
+					".section-id",
+				).value,
+			}),
+		});
+		window.location.reload();
+	});
+});

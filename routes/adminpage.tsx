@@ -128,7 +128,8 @@ export default function AdminPage({ data }: PageProps<Data>) {
 							<div class="w-[60%] h-[30rem] bg-slate-100 flex flex-col">
 								{data.sections.map((entry) => (
 									<div
-										style={"order: " + entry.value.position + ";"}
+										style={"order: " +
+											entry.value.position + ";"}
 										class={"flex w-full items-center h-[3rem]"}
 									>
 										<input
