@@ -1,32 +1,32 @@
 {
-	"lock": false,
-	"tasks": {
-		"check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
-		"cli": "echo \"import '\\$fresh/src/dev/cli.ts'\" | deno run --unstable -A -",
-		"manifest": "deno task cli manifest $(pwd)",
-		"start": "deno run -A --watch=static/,routes/ --unstable-kv dev.ts",
-		"build": "DENO_KV_ACCESS_TOKEN=ddp_RJKVHdMV5eAhHdHny39Vbzp20BI2Xh3Zis7W deno run -A --unstable-kv dev.ts build",
-		"preview": "deno run -A main.ts",
-		"update": "deno run -A -r https://fresh.deno.dev/update ."
-	},
-	"lint": { "rules": { "tags": ["fresh", "recommended"] } },
-	"exclude": ["**/_fresh/*"],
-	"imports": {
-		"$fresh/": "https://deno.land/x/fresh@1.7.3/",
-		"bcrypt": "npm:bcrypt@^5.1.1",
-		"preact": "https://esm.sh/preact@10.22.0",
-		"preact/": "https://esm.sh/preact@10.22.0/",
-		"@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
-		"@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
-		"react": "npm:react@^18.3.1",
-		"react-router-dom": "npm:react-router-dom@^6.28.0",
-		"tailwindcss": "npm:tailwindcss@3.4.1",
-		"tailwindcss/": "npm:/tailwindcss@3.4.1/",
-		"tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
-		"$std/": "https://deno.land/std@0.216.0/",
-		"validator": "npm:validator@^13.12.0"
-	},
-	"fmt": { "proseWrap": "never", "indentWidth": 4, "useTabs": true },
-	"compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
-	"nodeModulesDir": "auto"
+    "lock": false,
+    "tasks": {
+        "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
+        "cli": "echo \"import '\\$fresh/src/dev/cli.ts'\" | deno run --unstable -A -",
+        "manifest": "deno task cli manifest $(pwd)",
+        "start": "deno run -A --watch=static/,routes/ --unstable-kv dev.ts",
+        "build": "DENO_KV_ACCESS_TOKEN=ddp_RJKVHdMV5eAhHdHny39Vbzp20BI2Xh3Zis7W deno run -A --unstable-kv dev.ts build",
+        "preview": "deno run -A main.ts",
+        "update": "deno run -A -r https://fresh.deno.dev/update ."
+    },
+    "lint": { "rules": { "tags": ["fresh", "recommended"] } },
+    "exclude": ["**/_fresh/*"],
+    "imports": {
+        "$fresh/": "https://deno.land/x/fresh@1.7.3/",
+        "bcrypt": "npm:bcrypt@^5.1.1",
+        "preact": "https://esm.sh/preact@10.22.0",
+        "preact/": "https://esm.sh/preact@10.22.0/",
+        "@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
+        "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
+        "prettier": "npm:prettier@^3.4.2",
+        "react": "npm:react@^18.3.1",
+        "react-router-dom": "npm:react-router-dom@^6.28.0",
+        "tailwindcss": "npm:tailwindcss@3.4.1",
+        "tailwindcss/": "npm:/tailwindcss@3.4.1/",
+        "tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
+        "$std/": "https://deno.land/std@0.216.0/",
+        "validator": "npm:validator@^13.12.0"
+    },
+    "compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
+    "nodeModulesDir": "auto"
 }
