@@ -19,6 +19,12 @@ export interface Session {
     expiresAt: number;
 }
 
+export interface Draft {
+    id: string;
+    name: string;
+    html: string;
+}
+
 export interface Code {
     code: number;
     date: Date;

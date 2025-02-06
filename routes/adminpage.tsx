@@ -77,26 +77,48 @@ export default function AdminPage({ data }: PageProps<Data>) {
                                 </div>
                                 <ClassicButton text="Add Section" type="submit" />
                             </form>
+                        </div>
+                    </div>
+                    <div class="flex justify-center items-center space-x-8">
+                        <div className="flex flex-col w-[35rem] shrink-0 justify-center items-center">
                             <ClassicText text="Sections" class="m-4 text-5xl" />
-                            <div class="w-[60%] flex py-1 bg-slate-50">
+                            <div class="w-[25rem] flex py-1 bg-slate-50">
                                 <ClassicText text="Name" class="w-[60%] text-2xl px-2" />
                                 <ClassicText text="Index" class="w-[20%] text-2xl px-2" />
                             </div>
+                            <div class="w-[25rem] h-[30rem] bg-slate-100 flex flex-col">
+                                {data.sections.map((entry) => (
+                                    <div style={"order: " + entry.value.position + ";"} class={"flex w-full items-center h-[3rem]"}>
+                                        <input type="text" class="w-[60%] p-2 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full section-name" value={entry.value.name} />
+                                        <input type="hidden" class="section-id" value={entry.value.id} />
+                                        <input type="text" class="w-[20%] p-2 border-spacing-1 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full section-position" value={entry.value.position} />
+                                        <button class="flex justify-center w-[10%] h-full items-center bg-slate-50 save-section">
+                                            <img src="/images/svg/save.svg" alt="Save" class="w-[50%] h-[50%] bg-slate-50" />
+                                        </button>
+                                        <button class="flex justify-center w-[10%] h-full items-center bg-slate-50 delete-section">
+                                            <img src="/images/svg/delete.svg" alt="Delete" class="w-[50%] h-[50%] bg-slate-50" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <div class="w-[60%] h-[30rem] bg-slate-100 flex flex-col">
-                            {data.sections.map((entry) => (
-                                <div style={"order: " + entry.value.position + ";"} class={"flex w-full items-center h-[3rem]"}>
-                                    <input type="text" class="w-[60%] p-2 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full section-name" value={entry.value.name} />
-                                    <input type="hidden" class="section-id" value={entry.value.id} />
-                                    <input type="text" class="w-[20%] p-2 border-spacing-1 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full section-position" value={entry.value.position} />
-                                    <button class="flex justify-center w-[10%] h-full items-center bg-slate-50 save-section">
-                                        <img src="/images/svg/save.svg" alt="Save" class="w-[50%] h-[50%] bg-slate-50" />
-                                    </button>
-                                    <button class="flex justify-center w-[10%] h-full items-center bg-slate-50 delete-section">
-                                        <img src="/images/svg/delete.svg" alt="Delete" class="w-[50%] h-[50%] bg-slate-50" />
-                                    </button>
-                                </div>
-                            ))}
+                        <div className="flex flex-col text-center justify-center items-center">
+                            <ClassicText text="Drafts" class={"text-5xl m-4"}></ClassicText>
+                            <div class="w-[25rem] h-[30rem] bg-slate-100 flex flex-col">
+                                {data.sections.map((entry) => (
+                                    <div style={"order: " + entry.value.position + ";"} class={"flex w-full items-center h-[3rem]"}>
+                                        <input type="text" class="w-[50%] p-2 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full section-name" value={entry.value.name} />
+                                        <input type="hidden" class="section-id" value={entry.value.id} />
+                                        <input type="text" class="w-[30%] p-2 border-spacing-1 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full section-position" value={entry.value.position} />
+                                        <button class="flex justify-center w-[10%] h-full items-center bg-slate-50 delete-section">
+                                            <img src="/images/svg/edit.svg" alt="Delete" class="w-[50%] h-[50%] bg-slate-50" />
+                                        </button>
+                                        <button class="flex justify-center w-[10%] h-full items-center bg-slate-50 delete-section">
+                                            <img src="/images/svg/delete.svg" alt="Delete" class="w-[50%] h-[50%] bg-slate-50" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </section>
