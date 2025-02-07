@@ -7,6 +7,7 @@ import * as $_app from "./routes/_app.tsx";
 import * as $_middleware from "./routes/_middleware.ts";
 import * as $account from "./routes/account.tsx";
 import * as $adminpage from "./routes/adminpage.tsx";
+import * as $api_addSection from "./routes/api/addSection.ts";
 import * as $api_changeDescription from "./routes/api/changeDescription.ts";
 import * as $api_changeUsername from "./routes/api/changeUsername.ts";
 import * as $api_deleteProfilePicture from "./routes/api/deleteProfilePicture.ts";
@@ -36,6 +37,7 @@ const manifest = {
     "./routes/_middleware.ts": $_middleware,
     "./routes/account.tsx": $account,
     "./routes/adminpage.tsx": $adminpage,
+    "./routes/api/addSection.ts": $api_addSection,
     "./routes/api/changeDescription.ts": $api_changeDescription,
     "./routes/api/changeUsername.ts": $api_changeUsername,
     "./routes/api/deleteProfilePicture.ts": $api_deleteProfilePicture,
