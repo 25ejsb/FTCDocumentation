@@ -22,7 +22,10 @@ export interface Session {
 export interface Draft {
     id: string;
     name: string;
+    ownerEmail: string;
     html: string;
+    sectionId: string;
+    sectionName?: string;
 }
 
 export interface Code {
@@ -99,5 +102,8 @@ export async function createSection(section: Section) {
     const allEntries = await Array.fromAsync(kv.list<Section>({ prefix: ["sections"] }));
     const positions: Array<number> = allEntries.map((thissection) => thissection.value.position);
     await kv.set(["sections", section.id], { ...section });
-    await kv.set(["sections", section.id], { ...section });
+}
+
+export async function createDraft(draft: Draft) {
+    await kv.set(["drafts", draft.id], { ...draft, sectionName: (await kv.get<Section>(["sections", draft.sectionId])).value?.name });
 }

@@ -10,6 +10,8 @@ import * as $adminpage from "./routes/adminpage.tsx";
 import * as $api_changeDescription from "./routes/api/changeDescription.ts";
 import * as $api_changeUsername from "./routes/api/changeUsername.ts";
 import * as $api_deleteProfilePicture from "./routes/api/deleteProfilePicture.ts";
+import * as $api_draft_addDraft from "./routes/api/draft/addDraft.ts";
+import * as $api_draft_deleteDraft from "./routes/api/draft/deleteDraft.ts";
 import * as $api_getSessionData from "./routes/api/getSessionData.ts";
 import * as $api_logout from "./routes/api/logout.ts";
 import * as $api_sections_addSection from "./routes/api/sections/addSection.ts";
@@ -39,6 +41,8 @@ const manifest = {
     "./routes/api/changeDescription.ts": $api_changeDescription,
     "./routes/api/changeUsername.ts": $api_changeUsername,
     "./routes/api/deleteProfilePicture.ts": $api_deleteProfilePicture,
+    "./routes/api/draft/addDraft.ts": $api_draft_addDraft,
+    "./routes/api/draft/deleteDraft.ts": $api_draft_deleteDraft,
     "./routes/api/getSessionData.ts": $api_getSessionData,
     "./routes/api/logout.ts": $api_logout,
     "./routes/api/sections/addSection.ts": $api_sections_addSection,

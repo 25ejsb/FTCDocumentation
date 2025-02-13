@@ -36,7 +36,7 @@ export const handler: Handlers<Data, CtxState> = {
         await kv.delete(["sections", json.id]);
 
         return new Response(null, {
-            status: STATUS_CODE.OK,
+            status: 301,
             headers: { Location: "/adminpage" },
         });
     },

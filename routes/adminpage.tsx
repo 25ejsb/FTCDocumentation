@@ -4,7 +4,7 @@ import DefaultInput from "../components/inputs/DefaultInput.tsx";
 import ClassicText from "../components/texts/ClassicText.tsx";
 import Footer from "../islands/Footer.tsx";
 import Navbar from "../islands/Navbar.tsx";
-import { Section } from "../utils/db.ts";
+import { Draft, Section } from "../utils/db.ts";
 import { kv, User } from "../utils/db.ts";
 import { CtxState } from "./_middleware.ts";
 
@@ -13,17 +13,21 @@ interface Data {
     error?: string;
     user: User;
     sections: Array<Deno.KvEntry<Section>>;
+    drafts: Array<Deno.KvEntry<Draft>>;
 }
 
 export const handler: Handlers<Data, CtxState> = {
     async GET(req, res) {
         if (res.state.session.isAuthenticated) {
-            let allEntries = await Array.fromAsync(kv.list<Section>({ prefix: ["sections"] }));
+            const allEntries = await Array.fromAsync(kv.list<Section>({ prefix: ["sections"] }));
+            const allDrafts = await Array.fromAsync(kv.list<Draft>({ prefix: ["drafts"] }));
             const user = (await kv.get<User>(["users", res.state.session.email as string])).value;
+
             return res.render({
                 isLoggedIn: true,
                 user: user as User,
                 sections: allEntries,
+                drafts: allDrafts,
             });
         }
         return new Response(null, {
@@ -56,7 +60,7 @@ export default function AdminPage({ data }: PageProps<Data>) {
                                 <button style={`background-image: linear-gradient(to bottom, rgba(127, 29, 29, 0.1), rgba(127, 29, 29, 1)), url('https://www.thepublicdiscourse.com/wp-content/uploads/2023/09/BOOKS.jpg'); background-size: 150%; background-position: center; background-repeat: no-repeat`} class="flex text-white text-lg items-end justify-center text-center bg-red-900 w-[10rem] h-[7rem] p-4 rounded-2xl hover:shadow-mdblack hover:translate-y-2 transition-all" id="new-section">
                                     + New Section
                                 </button>
-                                <button style={`background-image: linear-gradient(to bottom, rgba(218, 160, 109, 0.1), rgba(218, 160, 109, 1)), url('https://miro.medium.com/v2/resize:fit:5120/1*42ebJizcUtZBNIZPmmMZ5Q.jpeg'); background-size: 120%; background-position: center; background-repeat: no-repeat`} class="flex text-white text-lg items-end justify-center text-center bg-red-900 w-[10rem] h-[7rem] p-4 rounded-2xl hover:shadow-mdblack hover:translate-y-2 transition-all" id="new-page">
+                                <button style={`background-image: linear-gradient(to bottom, rgba(218, 160, 109, 0.1), rgba(218, 160, 109, 1)), url('https://miro.medium.com/v2/resize:fit:5120/1*42ebJizcUtZBNIZPmmMZ5Q.jpeg'); background-size: 120%; background-position: center; background-repeat: no-repeat`} class="flex text-white text-lg items-end justify-center text-center bg-red-900 w-[10rem] h-[7rem] p-4 rounded-2xl hover:shadow-mdblack hover:translate-y-2 transition-all" id="new-draft">
                                     + New Draft
                                 </button>
                             </div>
@@ -76,6 +80,27 @@ export default function AdminPage({ data }: PageProps<Data>) {
                                     </div>
                                 </div>
                                 <ClassicButton text="Add Section" type="submit" />
+                            </form>
+                            <form method="POST" action="/api/draft/addDraft" class="shadow-mdblack w-[25rem] h-[15rem] mt-4 hidden justify-center items-center flex-col" id="new-draft-form">
+                                <div class="flex p-4 space-x-4">
+                                    <div class="flex flex-col w-[50%]">
+                                        <label class="text-lg" htmlFor="draft">
+                                            Name:
+                                        </label>
+                                        <DefaultInput class="rounded-none text-2xl w-full h-[4.5rem]" name="draft" id="draft" />
+                                    </div>
+                                    <div class="flex flex-col w-[50%]">
+                                        <label class="text-lg" htmlFor="position">
+                                            Section:
+                                        </label>
+                                        <select class="h-[4.5rem] focus:outline-none bg-slate-200 shadow-md my-4 uppercase text-red-900 text-shadow-mdblack tracking-wide text-2xl" name="section" id="draft-section">
+                                            {data.sections.map((entry) => (
+                                                <option value={entry.value.name}>{entry.value.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <ClassicButton text="Add Draft" type="submit" />
                             </form>
                         </div>
                     </div>
@@ -105,15 +130,22 @@ export default function AdminPage({ data }: PageProps<Data>) {
                         <div className="flex flex-col text-center justify-center items-center">
                             <ClassicText text="Drafts" class={"text-5xl m-4"}></ClassicText>
                             <div class="w-[25rem] h-[30rem] bg-slate-100 flex flex-col">
-                                {data.sections.map((entry) => (
-                                    <div style={"order: " + entry.value.position + ";"} class={"flex w-full items-center h-[3rem]"}>
-                                        <input type="text" class="w-[50%] p-2 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full section-name" value={entry.value.name} />
+                                {data.drafts.map((entry) => (
+                                    <div class={"flex w-full items-center h-[3rem]"}>
+                                        <input type="text" class="w-[40%] p-2 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full section-name" value={entry.value.name} />
                                         <input type="hidden" class="section-id" value={entry.value.id} />
-                                        <input type="text" class="w-[30%] p-2 border-spacing-1 text-red-900 uppercase text-shadow-mdblack tracking-wide focus:outline-none text-2xl bg-slate-50 h-full section-position" value={entry.value.position} />
-                                        <button class="flex justify-center w-[10%] h-full items-center bg-slate-50 delete-section">
+                                        <select class="bg-slate-50 w-[40%] h-full focus:outline-none text-red-900 text-shadow-mdblack tracking-wide text-[1.25rem] uppercase" value={entry.value.sectionName} name="section">
+                                            {data.sections.map((entry2) => (
+                                                <option value={entry2.value.name}>{entry2.value.name}</option>
+                                            ))}
+                                        </select>
+                                        <button class="flex justify-center w-[10%] h-full items-center bg-slate-50 edit-draft">
                                             <img src="/images/svg/edit.svg" alt="Delete" class="w-[50%] h-[50%] bg-slate-50" />
                                         </button>
-                                        <button class="flex justify-center w-[10%] h-full items-center bg-slate-50 delete-section">
+                                        <button class="flex justify-center w-[10%] h-full items-center bg-slate-50 save-draft">
+                                            <img src="/images/svg/save.svg" alt="Delete" class="w-[50%] h-[50%] bg-slate-50" />
+                                        </button>
+                                        <button class="flex justify-center w-[10%] h-full items-center bg-slate-50 delete-draft">
                                             <img src="/images/svg/delete.svg" alt="Delete" class="w-[50%] h-[50%] bg-slate-50" />
                                         </button>
                                     </div>

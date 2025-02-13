@@ -1,5 +1,7 @@
 const newsection = document.getElementById("new-section");
+const newdraft = document.getElementById("new-draft");
 const sectionform = document.getElementById("new-section-form");
+const draftform = document.getElementById("new-draft-form");
 
 newsection.addEventListener("click", (e) => {
     if (sectionform.classList.contains("flex")) {
@@ -8,6 +10,16 @@ newsection.addEventListener("click", (e) => {
     } else {
         sectionform.classList.remove("hidden");
         sectionform.classList.add("flex");
+    }
+});
+
+newdraft.addEventListener("click", (e) => {
+    if (draftform.classList.contains("flex")) {
+        draftform.classList.remove("flex");
+        draftform.classList.add("hidden");
+    } else {
+        draftform.classList.remove("hidden");
+        draftform.classList.add("flex");
     }
 });
 
@@ -22,7 +34,7 @@ document.querySelectorAll(".save-section").forEach((section) => {
                 position: parseInt(section.parentElement.querySelector(".section-position").value),
             }),
         });
-        window.location.reload();
+        globalThis.location.reload();
     });
 });
 
@@ -34,6 +46,6 @@ document.querySelectorAll(".delete-section").forEach((section) => {
                 id: section.parentElement.querySelector(".section-id").value,
             }),
         });
-        window.location.reload();
+        globalThis.location.reload();
     });
 });
