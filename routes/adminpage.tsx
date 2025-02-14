@@ -21,7 +21,7 @@ export const handler: Handlers<Data, CtxState> = {
         if (res.state.session.isAuthenticated) {
             const allEntries = await Array.fromAsync(kv.list<Section>({ prefix: ["sections"] }));
             const allDrafts = await Array.fromAsync(kv.list<Draft>({ prefix: ["drafts"] }));
-            const user = (await kv.get<User>(["users", res.state.session.email as string])).value;
+            const user = (await kv.get<User>(["users", res.state.session.email!])).value;
 
             return res.render({
                 isLoggedIn: true,

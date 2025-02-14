@@ -31,7 +31,7 @@ export const handler: Handlers = {
             return new Response("Code is Missing", { status: 404 });
         }
 
-        const codeDate = code.value?.date as number;
+        const codeDate = code.value?.date!;
         const currentDate = new Date();
 
         const time = 10 * 60 * 1000;
@@ -54,7 +54,7 @@ export const handler: Handlers = {
             });
         }
 
-        if (parseInt(code.value?.code as string) == parseInt(passedCode as string)) {
+        if (parseInt(code.value?.code!) == parseInt(passedCode!)) {
             if (!isLength(username, { min: 4, max: 20 }) || !isAlphanumeric(username)) {
                 return new Response("The username must be between lengths 4-20, and the username should be alphanumeric", { status: 400 });
             }

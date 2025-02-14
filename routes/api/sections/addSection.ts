@@ -16,7 +16,7 @@ export const handler: Handlers<Data, CtxState> = {
         const position = formData.get("position")?.toString();
 
         if (res.state.session.isAuthenticated) {
-            const user = (await kv.get<User>(["users", res.state.session!.email as string])).value;
+            const user = (await kv.get<User>(["users", res.state.session.email!])).value;
             if (user!.admin === true) {
                 if (section && position && isLength(section, { min: 3, max: 30 }) && parseInt(position) >= 0) {
                     await createSection({

@@ -12,7 +12,7 @@ export const handler: Handlers = {
 
         if (sessionId) {
             await getSession(sessionId).then(async (session) => {
-                const user = (await kv.get<User>(["users", session?.email as string])).value;
+                const user = (await kv.get<User>(["users", session?.email!])).value;
                 await kv.set(["users", user!.email], {
                     ...user,
                     profilePicture: "./images/rabbi.webp",

@@ -3,7 +3,6 @@ import isLength from "https://deno.land/x/deno_validator@v0.0.5/lib/isLength.ts"
 import { kv, Section, User } from "../../../utils/db.ts";
 import { CtxState } from "../../_middleware.ts";
 import { createDraft } from "../../../utils/db.ts";
-import { stringToIdentifier } from "$fresh/src/server/init_safe_deps.ts";
 
 interface Data {
     isLoggedIn: boolean;
@@ -28,7 +27,7 @@ export const handler: Handlers<Data, CtxState> = {
         });
 
         if (res.state.session.isAuthenticated) {
-            const user = (await kv.get<User>(["users", res.state.session.email as string])).value;
+            const user = (await kv.get<User>(["users", res.state.session.email!])).value!;
             if (user?.admin === true) {
                 if (draft && section && isLength(draft, { min: 3, max: 20 })) {
                     await createDraft({

@@ -23,8 +23,8 @@ export const handler: Handlers<Data, CtxState> = {
             return new Response("User isn't authenticated", { status: STATUS_CODE.Unauthorized });
         }
 
-        const user = (await kv.get<User>(["users", res.state.session.email!])).value as User;
-        if (user.admin === false) {
+        const user = (await kv.get<User>(["users", res.state.session.email!])).value!;
+        if (user.admin == false) {
             return new Response("User isn't an admin", {status: STATUS_CODE.NotAcceptable});
         }
 

@@ -36,7 +36,7 @@ export const handler: Handlers<Data, CtxState> = {
             });
         }
 
-        const section = (await kv.get<Section>(["sections", json.id])).value as Section;
+        const section = (await kv.get<Section>(["sections", json.id])).value!;
 
         if (section.position > 0) {
             await kv.set(["sections", section.id], {

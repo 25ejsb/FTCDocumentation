@@ -12,7 +12,7 @@ export const handler: Handlers = {
 
         const formData = await req.formData();
 
-        const username = formData.get("username")?.toString() as string;
+        const username = formData.get("username")?.toString()!;
 
         if (!isLength(username, { min: 4, max: 20 }) || !isAlphanumeric(username)) {
             return new Response("The username must be between lengths 4-20, and the username should be alphanumeric", { status: 400 });
