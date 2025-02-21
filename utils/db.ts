@@ -1,6 +1,9 @@
-export const kv = await Deno.openKv(Deno.env.get("KV_DATABASE") as string);
 import isAlphanumeric from "https://deno.land/x/deno_validator@v0.0.5/lib/isAlphanumeric.ts";
 import { isLength } from "https://deno.land/x/deno_validator@v0.0.5/mod.ts";
+
+import { openKvToolbox } from "@kitsonk/kv-toolbox";
+
+export const kv = await openKvToolbox({path: Deno.env.get("KV_DATABASE")!});
 
 export interface User {
     id: string;
